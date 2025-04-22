@@ -2,7 +2,7 @@ import 'css/prism.css'
 import 'katex/dist/katex.css'
 import { components } from '@/components/MDXComponents'
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
-import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer'
+import { sortPosts } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import { allBlogs } from 'contentlayer/generated'
 import PostSimple from '@/layouts/PostSimple'
@@ -69,16 +69,16 @@ export const generateStaticParams = async () => {
 export default async function Page(props: { params: Promise<{ slug: string[] }> }) {
   const params = await props.params
   const slug = decodeURI(params.slug.join('/'))
-  const sortedCoreContents = allCoreContent(sortPosts(allBlogs))
-  const postIndex = sortedCoreContents.findIndex((p) => p.slug === slug)
+  const sortedBlogs = sortPosts(allBlogs)
+  const postIndex = sortedBlogs.findIndex((p) => p.slug === slug)
   if (postIndex === -1) {
     return notFound()
   }
 
-  const filteredCoreContents = sortedCoreContents.filter((p) => !p.draft)
+  const filteredBlogs = sortedBlogs.filter((p) => !p.draft)
 
-  const prev = filteredCoreContents[postIndex + 1]
-  const next = filteredCoreContents[postIndex - 1]
+  const prev = filteredBlogs[postIndex + 1]
+  const next = filteredBlogs[postIndex - 1]
   const post = allBlogs.find((p) => p.slug === slug) as Blog
   // const authorList = post?.authors || ['default']
   // const authorDetails = authorList.map((author) => {
