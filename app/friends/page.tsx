@@ -58,11 +58,11 @@ export default function FriendsPage() {
                 <p>https://space.alex3236.moe</p>
                 <p>把星星揉进面团里，用月光当裱花袋～</p>
                 <p>
-                  <Link className="underline underline-offset-3" href="/static/favicon.png">
+                  <Link className="underline underline-offset-3" href="/static/assets/favicon.png">
                     FAVICON (PNG, 512*512)
                   </Link>
                   &nbsp;或&nbsp;
-                  <Link className="underline underline-offset-3" href="/static/avatar.png">
+                  <Link className="underline underline-offset-3" href="/static/assets/avatar.png">
                     AVATAR (PNG, 450*450)
                   </Link>
                 </p>
