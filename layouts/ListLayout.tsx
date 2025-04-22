@@ -20,8 +20,8 @@ interface PaginationProps {
 interface ListLayoutProps {
   posts: CoreContent<Blog>[]
   title: string
-  initialDisplayPosts?: CoreContent<Blog>[]
   pagination?: PaginationProps
+  // initialDisplayPosts?: CoreContent<Blog>[]
   searchBar?: boolean
 }
 
@@ -79,7 +79,7 @@ function Pagination({ totalPages, currentPage, alignRight }: PaginationProps) {
 
 export default function ListLayout({
   title,
-  initialDisplayPosts = [],
+  posts = [],
   pagination,
   searchBar = true,
 }: ListLayoutProps) {
@@ -91,8 +91,6 @@ export default function ListLayout({
     SearchButtonWrapper = siteMetadata.search.provider === 'algolia' ? AlgoliaButton : KBarButton
   }
 
-  const displayPosts = initialDisplayPosts.length > 0 ? initialDisplayPosts : null
-
   return (
     <>
       <div>
@@ -102,7 +100,7 @@ export default function ListLayout({
           </h1>
 
           <ul>
-            {displayPosts?.map((post) => {
+            {posts?.map((post) => {
               const { path, date, title, summary } = post
               return (
                 <li key={path} className="py-4 xl:py-2">

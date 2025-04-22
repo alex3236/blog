@@ -1,24 +1,33 @@
-import Link from '@/components/Link'
+'use client'
+
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export default function NotFound() {
+  const router = useRouter()
+  const [seconds, setSeconds] = useState(10)
+  useEffect(() => {
+    if (seconds <= 0) {
+      router.push('/')
+    } else {
+      setTimeout(() => {
+        setSeconds(seconds - 1)
+      }, 1000)
+    }
+  })
+
   return (
-    <div className="flex flex-col items-start justify-start md:mt-24 md:flex-row md:items-center md:justify-center md:space-x-6">
-      <div className="space-x-2 pt-6 pb-8 md:space-y-5">
-        <h1 className="text-6xl leading-9 font-extrabold tracking-tight text-gray-900 md:border-r-2 md:px-6 md:text-8xl md:leading-14 dark:text-gray-100">
-          404
-        </h1>
-      </div>
-      <div className="max-w-md">
-        <p className="mb-4 text-xl leading-normal font-bold md:text-2xl">
-          Sorry we couldn't find this page.
+    <div className="pt-6 pb-5">
+      <h1 className="text-4xl leading-10 font-extrabold tracking-tight text-gray-700 sm:leading-14 xl:text-5xl dark:text-gray-200">
+        ╮(๑•́ ₃•̀๑)╭
+      </h1>
+      <div className="p-10 text-center">
+        <h3 className="text-4xl leading-18 font-bold">404</h3>
+        <p>此处的星图落进了未预热的烤箱</p>
+        <p>
+          将在 {seconds} 秒后<Link href="/" className="font-bold text-primary-600">回到星际厨房</Link>
         </p>
-        <p className="mb-8">But dont worry, you can find plenty of other things on our homepage.</p>
-        <Link
-          href="/"
-          className="focus:shadow-outline-blue inline rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm leading-5 font-medium text-white shadow-xs transition-colors duration-150 hover:bg-blue-700 focus:outline-hidden dark:hover:bg-blue-500"
-        >
-          Back to homepage
-        </Link>
       </div>
     </div>
   )

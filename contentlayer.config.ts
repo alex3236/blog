@@ -117,7 +117,7 @@ export const Blog = defineDocumentType(() => ({
   contentType: 'mdx',
   fields: {
     title: { type: 'string', required: true },
-    date: { type: 'date', required: true },
+    date: { type: 'string', required: true },
     tags: { type: 'list', of: { type: 'string' }, default: [] },
     category: { type: 'string', required: false },
     lastmod: { type: 'date' },

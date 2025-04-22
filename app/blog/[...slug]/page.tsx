@@ -2,13 +2,14 @@ import 'css/prism.css'
 import 'katex/dist/katex.css'
 import { components } from '@/components/MDXComponents'
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
-import { allCoreContent, coreContent, sortPosts } from 'pliny/utils/contentlayer'
+import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import { allBlogs } from 'contentlayer/generated'
 import PostSimple from '@/layouts/PostSimple'
 import { Metadata } from 'next'
 import siteMetadata from '@/data/siteMetadata'
 import { notFound } from 'next/navigation'
+import { getValidDate } from '@/data/navLinks'
 
 export async function generateMetadata(props: {
   params: Promise<{ slug: string[] }>
@@ -24,9 +25,8 @@ export async function generateMetadata(props: {
   if (!post) {
     return
   }
-
-  const publishedAt = new Date(post.date).toISOString()
-  const modifiedAt = new Date(post.lastmod || post.date).toISOString()
+  const publishedAt = new Date(getValidDate(post.date) ? post.date : 0).toISOString()
+  const modifiedAt = post.lastmod ? new Date(post.lastmod).toISOString() : publishedAt
   // const authors = authorDetails.map((author) => author.name)
   let imageList = [siteMetadata.socialBanner]
   if (post.images) {
@@ -69,15 +69,16 @@ export const generateStaticParams = async () => {
 export default async function Page(props: { params: Promise<{ slug: string[] }> }) {
   const params = await props.params
   const slug = decodeURI(params.slug.join('/'))
-  // Filter out drafts in production
-  const sortedCoreContents = allCoreContent(sortPosts(allBlogs)).filter((p) => !p.draft)
+  const sortedCoreContents = allCoreContent(sortPosts(allBlogs))
   const postIndex = sortedCoreContents.findIndex((p) => p.slug === slug)
   if (postIndex === -1) {
     return notFound()
   }
 
-  const prev = sortedCoreContents[postIndex + 1]
-  const next = sortedCoreContents[postIndex - 1]
+  const filteredCoreContents = sortedCoreContents.filter((p) => !p.draft)
+
+  const prev = filteredCoreContents[postIndex + 1]
+  const next = filteredCoreContents[postIndex - 1]
   const post = allBlogs.find((p) => p.slug === slug) as Blog
   // const authorList = post?.authors || ['default']
   // const authorDetails = authorList.map((author) => {

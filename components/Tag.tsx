@@ -4,9 +4,10 @@ import { slug } from 'github-slugger'
 interface Props {
   text: string
   className?: string
+  count?: number
 }
 
-const Category = ({ text, className }: Props) => {
+const Category = ({ text, className, count }: Props) => {
   return (
     <Link
       href={`/categories/${slug(text)}`}
@@ -16,6 +17,7 @@ const Category = ({ text, className }: Props) => {
       }
     >
       {text.split(' ').join('-')}
+      {count && <span className="font-normal text-gray-500">({count})</span>}
     </Link>
   )
 }

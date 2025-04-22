@@ -9,16 +9,16 @@ const Header = () => {
   const isHome = usePathname() === '/'
   return (
     <>
-      <header className="w-full pt-10 pb-2 font-serif">
+      <header className="w-full pt-10">
         {isHome ? (
-          <div className="font-bold">
-            <h1 className="mb-2 text-4xl text-gray-700 lg:text-5xl dark:text-gray-300">
+          <div className="">
+            <h1 className="text-primary-600 dark:text-primary-300 font-serif text-4xl leading-10 font-bold lg:text-[2.6rem]">
               {siteMetadata.title}
             </h1>
             <div className="float-right hidden p-2.5 md:block">
               <ThemeSwitch />
             </div>
-            <p className="py-2 text-lg text-gray-600 lg:text-xl dark:text-gray-400">
+            <p className="py-2 pl-0.5 text-lg font-thin text-gray-600 lg:text-xl dark:text-gray-400">
               {siteMetadata.description}
             </p>
           </div>
@@ -28,11 +28,13 @@ const Header = () => {
               <ThemeSwitch />
             </div>
             <p className="text-lg text-gray-600 dark:text-gray-400">
-              <Link className="font-bold text-emerald-600" href="/">
+              <Link className="font-serif font-bold text-emerald-600" href="/">
                 星星碎片收容所&nbsp;
               </Link>
               <br className="md:hidden" />
-              <span className="md:before:content-['•_']">把星星揉进面团里，用月光当裱花袋～</span>
+              <span className="font-thin md:before:content-['•_']">
+                把星星揉进面团里，用月光当裱花袋～
+              </span>
             </p>
           </>
         )}

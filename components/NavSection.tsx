@@ -45,7 +45,7 @@ export default function NavSection() {
               key={t}
               className="pr-3 leading-8 tracking-tight text-gray-600 before:text-gray-500 before:content-['&'] dark:text-gray-300 dark:before:text-gray-400"
             >
-              <Category className="font-bold" key={t} text={t} />
+              <Category className="font-bold" key={t} text={t} count={tagCounts[t]} />
             </span>
           ))}
         </Section>

@@ -7,7 +7,7 @@ import siteMetadata from '@/data/siteMetadata'
 
 const POSTS_PER_PAGE = 5
 
-export const metadata = genPageMetadata({ title: siteMetadata.title })
+export const metadata = genPageMetadata({ title: `${siteMetadata.title} | ${siteMetadata.author}` })
 
 export default async function BlogPage(props: { searchParams: Promise<{ page: string }> }) {
   const posts = allCoreContent(sortPosts(allBlogs)).filter((post) => !post.draft)
@@ -26,12 +26,7 @@ export default async function BlogPage(props: { searchParams: Promise<{ page: st
 
   return (
     <>
-      <ListLayout
-        posts={posts}
-        initialDisplayPosts={initialDisplayPosts}
-        pagination={pagination}
-        title="纪事"
-      />
+      <ListLayout posts={initialDisplayPosts} pagination={pagination} title="纪事" />
       <NavSection />
     </>
   )

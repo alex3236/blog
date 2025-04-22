@@ -7,7 +7,7 @@ import categoryData from 'app/category-data.json'
 import { genPageMetadata } from 'app/seo'
 import { Metadata } from 'next'
 
-const POSTS_PER_PAGE = 5
+const POSTS_PER_PAGE = 10
 
 export async function generateMetadata(props: {
   params: Promise<{ category: string }>
@@ -46,9 +46,12 @@ export default async function CategoryPage(props: {
     sortPosts(allBlogs.filter((post) => post.category && slug(post.category) == category))
   )
   const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE)
-  const initialDisplayPosts = filteredPosts.slice(0, POSTS_PER_PAGE)
   const pageNumber = parseInt(searchParams.page) || 1
-  // console.log(params)
+  const initialDisplayPosts = filteredPosts.slice(
+    (pageNumber - 1) * POSTS_PER_PAGE,
+    pageNumber * POSTS_PER_PAGE
+  )
+  console.log(pageNumber)
   const pagination = {
     currentPage: pageNumber,
     totalPages: totalPages,
@@ -56,8 +59,7 @@ export default async function CategoryPage(props: {
 
   return (
     <ListLayout
-      posts={filteredPosts}
-      initialDisplayPosts={initialDisplayPosts}
+      posts={initialDisplayPosts}
       pagination={pagination}
       title={title}
       searchBar={false}

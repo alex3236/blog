@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { formatDate } from 'pliny/utils/formatDate'
+import { formatDate } from '@/data/navLinks'
 import type { Blog } from 'contentlayer/generated'
 import Comments from '@/components/Comments'
 import Link from '@/components/Link'
@@ -8,6 +8,7 @@ import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import { Category, Tag } from '@/components/Tag'
+import IconSeal from '@/components/IconSeal'
 
 interface LayoutProps {
   blog: Blog
@@ -38,9 +39,9 @@ export default function PostLayout({ blog, next, prev, children }: LayoutProps) 
               </div>
               <dl>
                 <div>
-                  <dt className="sr-only">Published on</dt>
+                  <dt className="sr-only">Last modified on</dt>
                   <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
-                    <time dateTime={blog.lastmod}>
+                    <time dateTime={blog.lastmod || date}>
                       {formatDate(blog.lastmod || date, siteMetadata.locale)}
                     </time>
                     {blog.weather && <span>, {blog.weather}</span>}
@@ -51,7 +52,14 @@ export default function PostLayout({ blog, next, prev, children }: LayoutProps) 
           </header>
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-4 xl:divide-y-0 dark:divide-gray-700">
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
-              <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
+              <div className="prose dark:prose-invert max-w-none pt-10 pb-8">
+                {children}
+                {!blog.draft && siteMetadata.showSeal && (
+                  <div className="flex justify-end">
+                    <IconSeal aria-label="印章：又活一日" className="h-14 w-14" />
+                  </div>
+                )}
+              </div>
             </div>
             {siteMetadata.comments && (
               <div className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300" id="comment">
@@ -60,7 +68,7 @@ export default function PostLayout({ blog, next, prev, children }: LayoutProps) 
             )}
             <footer>
               <div className="text-sm font-medium sm:flex-row sm:justify-between sm:text-base">
-                {prev && prev.path && (
+                {!blog.draft && prev && prev.path && (
                   <div className="flex justify-start pt-2">
                     <Link
                       href={`/${prev.path}`}
@@ -71,7 +79,7 @@ export default function PostLayout({ blog, next, prev, children }: LayoutProps) 
                     </Link>
                   </div>
                 )}
-                {next && next.path && (
+                {!blog.draft && next && next.path && (
                   <div className="flex justify-end pt-2">
                     <Link
                       href={`/${next.path}`}
