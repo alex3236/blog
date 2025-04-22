@@ -26,7 +26,10 @@ export default function NotFound() {
         <h3 className="text-4xl leading-18 font-bold">404</h3>
         <p>此处的星图落进了未预热的烤箱</p>
         <p>
-          将在 {seconds} 秒后<Link href="/" className="font-bold text-primary-600">回到星际厨房</Link>
+          将在 {seconds} 秒后
+          <Link href="/" className="text-primary-600 font-bold">
+            回到星际厨房
+          </Link>
         </p>
       </div>
     </div>
