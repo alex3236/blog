@@ -200,7 +200,7 @@ export default makeSource({
   onSuccess: async (importData) => {
     const { allBlogs } = await importData()
     createTagCount(allBlogs)
-    createSearchIndex(allBlogs)
     createCategoryCount(allBlogs)
+    createSearchIndex(allBlogs)
   },
 })
