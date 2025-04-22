@@ -1,0 +1,42 @@
+---
+title: 在进程结束时执行任务（自动退出WPS办公助手）
+date: '2025-04-20 21:34'
+tags: []
+category: 手记
+weather: 浮尘
+draft: false
+summary: WPS 非常喜欢它的办公助手，所以想在关闭 WPS 时让它自动退出。那么…
+---
+
+WPS 非常喜欢它的办公助手，所以想在关闭 WPS 时让它自动退出。
+
+## 准备
+本地安全策略 -> 本地策略 -> 审核策略 -> 审核进程跟踪，启用「成功」选项；
+
+## 添加任务
+任务计划程序，添加「发生事件时」触发器，应用以下自定义 XML 事件筛选器：
+
+```xml
+<QueryList>
+  <Query Id="0" Path="Security">
+    <Select Path="Security">
+     *[System[Provider[@Name='Microsoft-Windows-Security-Auditing'] and (band(Keywords,9007199254740992)) and (EventID=4689)]]
+   and
+     *[EventData[
+     (Data='C:\Program Files (x86)\Kingsoft\WPS Office\12.8.2.18205\office6\wps.exe')
+     or (Data='C:\Program Files (x86)\Kingsoft\WPS Office\12.8.2.18205\office6\wpp.exe')
+     or (Data='C:\Program Files (x86)\Kingsoft\WPS Office\12.8.2.18205\office6\et.exe')
+     or (Data='C:\Program Files (x86)\Kingsoft\WPS Office\12.8.2.18205\office6\wpspdf.exe')]]
+    </Select>
+  </Query>
+</QueryList>
+```
+
+并添加以下操作：
+```batch
+taskkill /f /im wpscloudsvr.exe
+```
+
+## 参考
+- https://superuser.com/questions/745318/how-to-start-a-program-when-another-one-is-started
+- https://superuser.com/questions/1617797/task-scheduler-trigger-task-when-a-process-terminates

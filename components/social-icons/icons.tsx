@@ -1,7 +1,17 @@
 import { SVGProps } from 'react'
+import { builders } from 'prettier/doc'
 
 // Icons taken from: https://simpleicons.org/
 // To add a new icon, add a new function here and add it to components in social-icons/index.tsx
+export function RightArrow(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 12" {...props}>
+      <path d="m0.32349,12.24118l7,-6l-7,-6l0,12z" />
+      {/*<rect className="st0" width="24" height="24" />*/}
+      {/*<rect className="st0" width="24" height="24" />*/}
+    </svg>
+  )
+}
 
 export function Facebook(svgProps: SVGProps<SVGSVGElement>) {
   return (
@@ -102,6 +112,7 @@ export function Medium(svgProps: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
+
 export function Bluesky(svgProps: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...svgProps}>

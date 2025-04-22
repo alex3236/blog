@@ -1,53 +1,89 @@
+'use client'
+
 import siteMetadata from '@/data/siteMetadata'
-import headerNavLinks from '@/data/headerNavLinks'
-import Logo from '@/data/logo.svg'
 import Link from './Link'
-import MobileNav from './MobileNav'
-import ThemeSwitch from './ThemeSwitch'
-import SearchButton from './SearchButton'
+import { usePathname } from 'next/navigation'
+import ThemeSwitch from '@/components/ThemeSwitch'
 
 const Header = () => {
-  let headerClass = 'flex items-center w-full bg-white dark:bg-gray-950 justify-between py-10'
-  if (siteMetadata.stickyNav) {
-    headerClass += ' sticky top-0 z-50'
-  }
-
+  const isHome = usePathname() === '/'
   return (
-    <header className={headerClass}>
-      <Link href="/" aria-label={siteMetadata.headerTitle}>
-        <div className="flex items-center justify-between">
-          <div className="mr-3">
-            <Logo />
-          </div>
-          {typeof siteMetadata.headerTitle === 'string' ? (
-            <div className="hidden h-6 text-2xl font-semibold sm:block">
-              {siteMetadata.headerTitle}
+    <>
+      <header className="w-full pt-10 pb-2 font-serif">
+        {isHome ? (
+          <div className="font-bold">
+            <h1 className="mb-2 text-4xl text-gray-700 lg:text-5xl dark:text-gray-300">
+              {siteMetadata.title}
+            </h1>
+            <div className="float-right hidden p-2.5 md:block">
+              <ThemeSwitch />
             </div>
-          ) : (
-            siteMetadata.headerTitle
-          )}
-        </div>
-      </Link>
-      <div className="flex items-center space-x-4 leading-5 sm:-mr-6 sm:space-x-6">
-        <div className="no-scrollbar hidden max-w-40 items-center gap-x-4 overflow-x-auto sm:flex md:max-w-72 lg:max-w-96">
-          {headerNavLinks
-            .filter((link) => link.href !== '/')
-            .map((link) => (
-              <Link
-                key={link.title}
-                href={link.href}
-                className="hover:text-primary-500 dark:hover:text-primary-400 m-1 font-medium text-gray-900 dark:text-gray-100"
-              >
-                {link.title}
+            <p className="py-2 text-lg text-gray-600 lg:text-xl dark:text-gray-400">
+              {siteMetadata.description}
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className="float-right hidden p-0.5 md:block">
+              <ThemeSwitch />
+            </div>
+            <p className="text-lg text-gray-600 dark:text-gray-400">
+              <Link className="font-bold text-emerald-600" href="/">
+                星星碎片收容所&nbsp;
               </Link>
-            ))}
-        </div>
-        <SearchButton />
-        <ThemeSwitch />
-        <MobileNav />
-      </div>
-    </header>
+              <br className="md:hidden" />
+              <span className="md:before:content-['•_']">把星星揉进面团里，用月光当裱花袋～</span>
+            </p>
+          </>
+        )}
+      </header>
+      <hr className="my-4" />
+    </>
   )
 }
+
+// const HeaderBak = () => {
+//   let headerClass = 'flex items-center w-full bg-white dark:bg-gray-950 justify-between py-10'
+//   if (siteMetadata.stickyNav) {
+//     headerClass += ' sticky top-0 z-50'
+//   }
+//
+//   return (
+//     <header className={headerClass}>
+//       <Link href="/" aria-label={siteMetadata.headerTitle}>
+//         <div className="flex items-center justify-between">
+//           <div className="mr-3">
+//             <Logo />
+//           </div>
+//           {typeof siteMetadata.headerTitle === 'string' ? (
+//             <div className="hidden h-6 text-2xl font-semibold sm:block">
+//               {siteMetadata.headerTitle}
+//             </div>
+//           ) : (
+//             siteMetadata.headerTitle
+//           )}
+//         </div>
+//       </Link>
+//       <div className="flex items-center space-x-4 leading-5 sm:-mr-6 sm:space-x-6">
+//         <div className="no-scrollbar hidden max-w-40 items-center gap-x-4 overflow-x-auto sm:flex md:max-w-72 lg:max-w-96">
+//           {navLinks
+//             .filter((link) => link.href !== '/')
+//             .map((link) => (
+//               <Link
+//                 key={link.title}
+//                 href={link.href}
+//                 className="hover:text-primary-500 dark:hover:text-primary-400 m-1 font-medium text-gray-900 dark:text-gray-100"
+//               >
+//                 {link.title}
+//               </Link>
+//             ))}
+//         </div>
+//         <SearchButton />
+//         <ThemeSwitch />
+//         <MobileNav />
+//       </div>
+//     </header>
+//   )
+// }
 
 export default Header

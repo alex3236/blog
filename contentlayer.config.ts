@@ -1,4 +1,4 @@
-import { defineDocumentType, ComputedFields, makeSource } from 'contentlayer2/source-files'
+import { ComputedFields, defineDocumentType, makeSource } from 'contentlayer2/source-files'
 import { writeFileSync } from 'fs'
 import readingTime from 'reading-time'
 import { slug } from 'github-slugger'
@@ -9,10 +9,10 @@ import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import { remarkAlert } from 'remark-github-blockquote-alert'
 import {
-  remarkExtractFrontmatter,
-  remarkCodeTitles,
-  remarkImgToJsx,
   extractTocHeadings,
+  remarkCodeTitles,
+  remarkExtractFrontmatter,
+  remarkImgToJsx,
 } from 'pliny/mdx-plugins/index.js'
 // Rehype packages
 import rehypeSlug from 'rehype-slug'
@@ -80,6 +80,24 @@ async function createTagCount(allBlogs) {
   writeFileSync('./app/tag-data.json', formatted)
 }
 
+async function createCategoryCount(allBlogs) {
+  const categoryCount: Record<string, number> = {}
+  allBlogs.forEach((file) => {
+    if (file.category && (!isProduction || file.draft !== true)) {
+      const formattedCategory = slug(file.category)
+      if (formattedCategory in categoryCount) {
+        categoryCount[formattedCategory] += 1
+      } else {
+        categoryCount[formattedCategory] = 1
+      }
+    }
+  })
+  const formatted = await prettier.format(JSON.stringify(categoryCount, null, 2), {
+    parser: 'json',
+  })
+  writeFileSync('./app/category-data.json', formatted)
+}
+
 function createSearchIndex(allBlogs) {
   if (
     siteMetadata?.search?.provider === 'kbar' &&
@@ -101,12 +119,12 @@ export const Blog = defineDocumentType(() => ({
     title: { type: 'string', required: true },
     date: { type: 'date', required: true },
     tags: { type: 'list', of: { type: 'string' }, default: [] },
+    category: { type: 'string', required: false },
     lastmod: { type: 'date' },
     draft: { type: 'boolean' },
     summary: { type: 'string' },
     images: { type: 'json' },
-    authors: { type: 'list', of: { type: 'string' } },
-    layout: { type: 'string' },
+    weather: { type: 'string' },
     bibliography: { type: 'string' },
     canonicalUrl: { type: 'string' },
   },
@@ -128,28 +146,28 @@ export const Blog = defineDocumentType(() => ({
   },
 }))
 
-export const Authors = defineDocumentType(() => ({
-  name: 'Authors',
-  filePathPattern: 'authors/**/*.mdx',
-  contentType: 'mdx',
-  fields: {
-    name: { type: 'string', required: true },
-    avatar: { type: 'string' },
-    occupation: { type: 'string' },
-    company: { type: 'string' },
-    email: { type: 'string' },
-    twitter: { type: 'string' },
-    bluesky: { type: 'string' },
-    linkedin: { type: 'string' },
-    github: { type: 'string' },
-    layout: { type: 'string' },
-  },
-  computedFields,
-}))
+// export const Authors = defineDocumentType(() => ({
+//   name: 'Authors',
+//   filePathPattern: 'authors/**/*.mdx',
+//   contentType: 'mdx',
+//   fields: {
+//     name: { type: 'string', required: true },
+//     avatar: { type: 'string' },
+//     occupation: { type: 'string' },
+//     company: { type: 'string' },
+//     email: { type: 'string' },
+//     twitter: { type: 'string' },
+//     bluesky: { type: 'string' },
+//     linkedin: { type: 'string' },
+//     github: { type: 'string' },
+//     layout: { type: 'string' },
+//   },
+//   computedFields,
+// }))
 
 export default makeSource({
   contentDirPath: 'data',
-  documentTypes: [Blog, Authors],
+  documentTypes: [Blog],
   mdx: {
     cwd: process.cwd(),
     remarkPlugins: [
@@ -183,5 +201,6 @@ export default makeSource({
     const { allBlogs } = await importData()
     createTagCount(allBlogs)
     createSearchIndex(allBlogs)
+    createCategoryCount(allBlogs)
   },
 })

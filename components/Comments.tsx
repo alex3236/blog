@@ -15,7 +15,12 @@ export default function Comments({ slug }: { slug: string }) {
       {loadComments ? (
         <CommentsComponent commentsConfig={siteMetadata.comments} slug={slug} />
       ) : (
-        <button onClick={() => setLoadComments(true)}>Load Comments</button>
+        <button
+          onClick={() => setLoadComments(true)}
+          className="border-primary-600 text-primary-600 cursor-pointer rounded-full border-2 px-6 py-2"
+        >
+          Load Comments
+        </button>
       )}
     </>
   )

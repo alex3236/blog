@@ -1,0 +1,137 @@
+---
+title: 自动检测并注册 Java 别名
+date: '2025-03-23 11:11'
+tags: []
+category: 手记
+weather: 晴
+draft: false
+summary: 我总是为 Java 项目使用 Intellij IDEA 下载的 JDK，但当我们需要在终端中使用 Java 时，不是很好管理各个版本。因此写了这个使用 doskey 的脚本，注册 java 和 jshell 的别名。
+---
+
+我总是为 Java 项目使用 Intellij IDEA 下载的 JDK，但当我们需要在终端中使用 Java 时，不是很好管理各个版本。因此写了这个使用 doskey 的脚本，注册 java 和 jshell 的别名。
+
+
+### 效果
+```shell
+> java -version
+openjdk version "1.8.0_442"
+OpenJDK Runtime Environment Corretto-8.442.06.1 (build 1.8.0_442-b06)
+OpenJDK 64-Bit Server VM Corretto-8.442.06.1 (build 25.442-b06, mixed mode)
+
+> setjava 17
+[Java] Switched to v17 (C:\Users\Alex3236\.jdks\corretto-17.0.14\bin\java.exe)
+[JShell] Switched to v17 (C:\Users\Alex3236\.jdks\corretto-17.0.14\bin\jshell.exe)
+
+> java -version
+openjdk version "17.0.14" 2025-01-21 LTS
+OpenJDK Runtime Environment Corretto-17.0.14.7.1 (build 17.0.14+7-LTS)
+OpenJDK 64-Bit Server VM Corretto-17.0.14.7.1 (build 17.0.14+7-LTS, mixed mode, sharing)
+
+> jshell -version
+jshell 17.0.14
+
+> java8 -version
+openjdk version "1.8.0_442"
+OpenJDK Runtime Environment Corretto-8.442.06.1 (build 1.8.0_442-b06)
+OpenJDK 64-Bit Server VM Corretto-8.442.06.1 (build 25.442-b06, mixed mode)
+```
+
+### 脚本
+
+```batch
+:: cmd-autorun.bat
+@echo off
+setlocal enabledelayedexpansion
+
+set "jdk_root=%HOMEDRIVE%%HOMEPATH%\.jdks"
+
+for /d %%d in ("%jdk_root%\*") do (
+    if exist "%%d\version.txt" (
+        :: 读取版本文件第一行
+        set "version="
+        for /f "usebackq delims=" %%v in ("%%d\version.txt") do if not defined version set "version=%%v"
+
+        :: 提取主版本号
+        for /f "tokens=1 delims=." %%m in ("!version!") do set "major=%%m"
+
+        :: 注册Java别名
+        set "java_exe=%%d\bin\java.exe"
+        if exist "!java_exe!" (
+            doskey java!major!="!java_exe!" $*
+        )
+
+        :: 注册JShell别名（如果存在）
+        set "jshell_exe=%%d\bin\jshell.exe"
+        if exist "!jshell_exe!" (
+            doskey jshell!major!="!jshell_exe!" $*
+        )
+    )
+)
+
+endlocal
+```
+
+```batch
+:: setjava.bat
+@echo off
+setlocal enabledelayedexpansion
+
+rem 参数检查
+if "%~1"=="" (
+    echo Usage: %~nx0 ^<major_version^>
+    echo Example: %~nx0 17
+    exit /b 1
+)
+
+rem 验证版本号格式
+echo %1|findstr /r "^[0-9][0-9]*$" >nul || (
+    echo Invalid version number: %1
+    exit /b 1
+)
+
+set "target_java=java%1"
+set "target_jshell=jshell%1"
+set "java_macro="
+set "jshell_macro="
+
+rem 获取所有宏定义
+for /f "tokens=1* delims==" %%A in ('doskey /macros') do (
+    if /i "%%A"=="%target_java%" set "java_macro=%%B"
+    if /i "%%A"=="%target_jshell%" set "jshell_macro=%%B"
+)
+
+rem 处理Java切换
+if not defined java_macro (
+    echo Error: Java v%1 alias not registered
+    exit /b 1
+)
+
+rem 提取Java路径
+set "java_path=!java_macro:" $*=!"
+set "java_path=!java_path:~1!"
+
+if exist "!java_path!" (
+    doskey java="!java_path!" $*
+    echo [Java] Switched to v%1 ^(!java_path!^)
+) else (
+    echo Error: Java executable not found
+    exit /b 1
+)
+
+rem 处理JShell切换
+if defined jshell_macro (
+    set "jshell_path=!jshell_macro:" $*=!"
+    set "jshell_path=!jshell_path:~1!"
+
+    if exist "!jshell_path!" (
+        doskey jshell="!jshell_path!" $*
+        echo [JShell] Switched to v%1 ^(!jshell_path!^)
+    ) else (
+        echo Warning: JShell executable missing for v%1
+    )
+) else (
+    echo Info: JShell v%1 not registered, keeping current
+)
+
+endlocal
+```

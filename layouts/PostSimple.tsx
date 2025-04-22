@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 import { formatDate } from 'pliny/utils/formatDate'
-import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Comments from '@/components/Comments'
 import Link from '@/components/Link'
@@ -8,16 +7,18 @@ import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import { Category, Tag } from '@/components/Tag'
 
 interface LayoutProps {
-  content: CoreContent<Blog>
+  blog: Blog
   children: ReactNode
   next?: { path: string; title: string }
   prev?: { path: string; title: string }
+  modified?: string
 }
 
-export default function PostLayout({ content, next, prev, children }: LayoutProps) {
-  const { path, slug, date, title } = content
+export default function PostLayout({ blog, next, prev, children }: LayoutProps) {
+  const { slug, date, title } = blog
 
   return (
     <SectionContainer>
@@ -25,21 +26,30 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
       <article>
         <div>
           <header>
-            <div className="space-y-1 border-b border-gray-200 pb-10 text-center dark:border-gray-700">
+            <div className="space-y-1 border-b border-gray-200 pb-5 dark:border-gray-700">
+              <div>
+                <PageTitle>{title}</PageTitle>
+              </div>
+              <div className="py-0.5 md:float-right md:justify-end">
+                <Category text={blog.category ?? 'NIL'} />
+                {blog.tags.map((tag) => (
+                  <Tag key={tag} text={tag} />
+                ))}
+              </div>
               <dl>
                 <div>
                   <dt className="sr-only">Published on</dt>
                   <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
-                    <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
+                    <time dateTime={blog.lastmod}>
+                      {formatDate(blog.lastmod || date, siteMetadata.locale)}
+                    </time>
+                    {blog.weather && <span>, {blog.weather}</span>}
                   </dd>
                 </div>
               </dl>
-              <div>
-                <PageTitle>{title}</PageTitle>
-              </div>
             </div>
           </header>
-          <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:divide-y-0 dark:divide-gray-700">
+          <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-4 xl:divide-y-0 dark:divide-gray-700">
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
               <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
             </div>
@@ -49,12 +59,12 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
               </div>
             )}
             <footer>
-              <div className="flex flex-col text-sm font-medium sm:flex-row sm:justify-between sm:text-base">
+              <div className="text-sm font-medium sm:flex-row sm:justify-between sm:text-base">
                 {prev && prev.path && (
-                  <div className="pt-4 xl:pt-8">
+                  <div className="flex justify-start pt-2">
                     <Link
                       href={`/${prev.path}`}
-                      className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                      className="text-primary-600 hover:text-primary-600 dark:hover:text-primary-400"
                       aria-label={`Previous post: ${prev.title}`}
                     >
                       &larr; {prev.title}
@@ -62,10 +72,10 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
                   </div>
                 )}
                 {next && next.path && (
-                  <div className="pt-4 xl:pt-8">
+                  <div className="flex justify-end pt-2">
                     <Link
                       href={`/${next.path}`}
-                      className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                      className="text-primary-600 hover:text-primary-600 dark:hover:text-primary-400"
                       aria-label={`Next post: ${next.title}`}
                     >
                       {next.title} &rarr;
