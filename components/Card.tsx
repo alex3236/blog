@@ -1,56 +1,69 @@
-import Image from './Image'
-import Link from './Link'
+'use client'
 
-const Card = ({ title, description, imgSrc, href }) => (
-  <div className="md max-w-[544px] p-4 md:w-1/2">
+import Image from 'next/image'
+
+import { useRouter } from 'next/navigation'
+import React from 'react'
+
+const Card = ({ href, imgUrl, title, children }) => {
+  const router = useRouter()
+  const handleClick = (e) => {
+    e.stopPropagation()
+    router.push(href)
+  }
+
+  return (
     <div
-      className={`${
-        imgSrc && 'h-full'
-      } overflow-hidden rounded-md border-2 border-gray-200/60 dark:border-gray-700/60`}
+      role="link"
+      onClick={handleClick}
+      onKeyDown={(e) => e.key === 'Enter' && handleClick(e)}
+      tabIndex={0}
+      className="cursor-pointer break-inside-avoid rounded-2xl border-3 border-sky-600 p-4 transition-colors dark:border-gray-400 dark:bg-gray-800"
     >
-      {imgSrc &&
-        (href ? (
-          <Link href={href} aria-label={`Link to ${title}`}>
+      <div className="flex">
+        <div className="mr-4 flex-shrink-0">
+          <div className="h-16 w-16 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-600">
             <Image
-              alt={title}
-              src={imgSrc}
-              className="object-cover object-center md:h-36 lg:h-48"
-              width={544}
-              height={306}
+              src={imgUrl}
+              width={40}
+              height={40}
+              alt="Avatar"
+              className="h-full w-full object-cover"
             />
-          </Link>
-        ) : (
-          <Image
-            alt={title}
-            src={imgSrc}
-            className="object-cover object-center md:h-36 lg:h-48"
-            width={544}
-            height={306}
-          />
-        ))}
-      <div className="p-6">
-        <h2 className="mb-3 text-2xl leading-8 font-bold tracking-tight">
-          {href ? (
-            <Link href={href} aria-label={`Link to ${title}`}>
-              {title}
-            </Link>
-          ) : (
-            title
-          )}
-        </h2>
-        <p className="prose mb-3 max-w-none text-gray-500 dark:text-gray-400">{description}</p>
-        {href && (
-          <Link
-            href={href}
-            className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 text-base leading-6 font-medium"
-            aria-label={`Link to ${title}`}
-          >
-            Learn more &rarr;
-          </Link>
-        )}
+          </div>
+        </div>
+        <div className="min-w-0 flex-1">
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">{title}</h3>
+          <p className="text-sm text-gray-500 dark:text-gray-400">{children}</p>
+        </div>
       </div>
     </div>
-  </div>
-)
+  )
+}
 
-export default Card
+const alertTypes = {
+  primary:
+    'border-primary-600 bg-primary-50 text-primary-900 0 dark:bg-primary-900 dark:text-primary-300',
+  blue: 'border-sky-600 bg-sky-50 text-sky-900 dark:bg-sky-900 dark:text-sky-300',
+  yellow: 'border-yellow-600 bg-yellow-50 text-yellow-900 dark:bg-yellow-900 dark:text-yellow-300',
+  red: 'border-red-600 bg-red-50 text-red-900 dark:bg-red-900 dark:text-red-300',
+}
+
+const AlertCard = ({
+  type = 'primary',
+  children,
+}: {
+  children: React.ReactNode
+  type: 'primary' | 'blue' | 'yellow' | 'red'
+}) => {
+  console.log(type)
+  return (
+    <div className="px-4 pt-4">
+      <div className={`${alertTypes[type]} w-full rounded-xl border-2 px-4 py-2 text-left`}>
+        {children}
+      </div>
+    </div>
+  )
+}
+
+export { Card, AlertCard }

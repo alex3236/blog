@@ -28,7 +28,10 @@ const Header = () => {
               <ThemeSwitch />
             </div>
             <p className="text-lg text-gray-600 dark:text-gray-400">
-              <Link className="font-serif font-bold text-emerald-600" href="/">
+              <Link
+                className="text-primary-600 dark:text-primary-400 font-serif font-bold"
+                href="/"
+              >
                 星星碎片收容所&nbsp;
               </Link>
               <br className="md:hidden" />

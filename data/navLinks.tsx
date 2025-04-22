@@ -1,3 +1,5 @@
+import React from 'react'
+
 const getValidDate = (date: string) => {
   const d = new Date(date)
   return isNaN(d.getTime()) ? null : d
@@ -21,10 +23,21 @@ const formatTime = (date: string) => {
   return d ? `${hours}:${minutes}` : ''
 }
 
+interface Friend {
+  href: string
+  imgUrl: string
+  title: string
+  description: React.ReactNode
+}
+
 const navLinks = [
   { href: '/blog/stardust-baking', title: '星辰烘焙手记' },
   { href: 'https://alex3236.moe/', title: '关于我' },
   { href: '/friends', title: '朋友们' },
 ]
 
-export { formatDate, formatTime, getValidDate, navLinks }
+const friends: Friend[] = [
+  // { href: '/', imgUrl: 'https://via.placeholder.com/64', title: '星际厨房', description: <></> },
+]
+
+export { formatDate, formatTime, getValidDate, navLinks, friends }

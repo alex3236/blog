@@ -14,6 +14,10 @@ const siteMetadata = {
     url: 'https://icp.gov.moe/?keyword=20233236',
   },
   showSeal: true, // See PostSimple and IconSeal components
+  friends: {
+    enable: true,
+    formUrl: 'https://alex3236.feishu.cn/share/base/form/shrcn1nwfIZn3exqOY8snCE6xbe',
+  },
   analytics: {
     // If you want to use an analytics provider you have to add it to the
     // content security policy in the `next.config.js` file.
