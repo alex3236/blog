@@ -3,6 +3,9 @@ import { friends } from '@/data/navLinks'
 import Image from 'next/image'
 import Link from 'next/link'
 import siteMetadata from '@/data/siteMetadata'
+import { genPageMetadata } from '../seo'
+
+export const metadata = genPageMetadata({ title: `朋友们 | ${siteMetadata.title}` })
 
 export default function FriendsPage() {
   return (
@@ -54,9 +57,15 @@ export default function FriendsPage() {
                 </p>
                 <p>https://space.alex3236.moe</p>
                 <p>把星星揉进面团里，用月光当裱花袋～</p>
-                <Link className="underline underline-offset-3" href="/static/favicon.png">
-                  FAVICON (PNG, 512*512)
-                </Link>
+                <p>
+                  <Link className="underline underline-offset-3" href="/static/favicon.png">
+                    FAVICON (PNG, 512*512)
+                  </Link>
+                  &nbsp;或&nbsp;
+                  <Link className="underline underline-offset-3" href="/static/favicon.png">
+                    AVATAR (PNG, 450*450)
+                  </Link>
+                </p>
               </div>
               <p>若愿接续这缕星轨，许我将釉色罐盏盛满暗物质曲奇，回赠至您的数据银河。</p>
               <Link className="leading-10 font-bold" href={siteMetadata.friends.formUrl}>
