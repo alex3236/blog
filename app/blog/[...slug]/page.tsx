@@ -70,12 +70,13 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
   const params = await props.params
   const slug = decodeURI(params.slug.join('/'))
   const sortedBlogs = sortPosts(allBlogs)
-  const postIndex = sortedBlogs.findIndex((p) => p.slug === slug)
-  if (postIndex === -1) {
+
+  if (sortedBlogs.findIndex((p) => p.slug === slug) === -1) {
     return notFound()
   }
 
   const filteredBlogs = sortedBlogs.filter((p) => !p.draft)
+  const postIndex = filteredBlogs.findIndex((p) => p.slug === slug)
 
   const prev = filteredBlogs[postIndex + 1]
   const next = filteredBlogs[postIndex - 1]
