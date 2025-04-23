@@ -47,3 +47,7 @@ yarn-error.log*
 
 # Contentlayer
 .contentlayer
+
+# IDEs
+/.vscode
+/.idea
