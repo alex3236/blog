@@ -9,6 +9,7 @@ import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import { Category, Tag } from '@/components/Tag'
 import IconSeal from '@/components/IconSeal'
+import { PhotoProvider } from '@/components/PhotoPreviewerWrapper'
 
 interface LayoutProps {
   blog: Blog
@@ -53,7 +54,7 @@ export default function PostLayout({ blog, next, prev, children }: LayoutProps) 
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-4 xl:divide-y-0 dark:divide-gray-700">
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
               <div className="prose dark:prose-invert max-w-none pt-10 pb-8">
-                {children}
+                <PhotoProvider>{children}</PhotoProvider>
                 {!blog.draft && siteMetadata.showSeal && (
                   <div className="flex justify-end">
                     <IconSeal aria-label="印章：又活一日" className="h-14 w-14" />

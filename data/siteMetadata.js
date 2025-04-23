@@ -8,6 +8,7 @@ const siteMetadata = {
   siteUrl: 'https://space.alex3236.moe',
   siteRepo: 'https://github.com/alex3236/blog',
   locale: 'zh-CN',
+  showProgressBar: true, // NextTopLoader
   icp: {
     // ICP settings
     text: '萌ICP备20233236',
