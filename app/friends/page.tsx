@@ -27,7 +27,7 @@ export default function FriendsPage() {
         </div>
       )}
       {siteMetadata.friends.enable && (
-        <>
+        <div className="mt-10">
           <AlertCard type="primary">
             <details>
               <summary className="cursor-pointer">
@@ -73,7 +73,7 @@ export default function FriendsPage() {
               </Link>
             </details>
           </AlertCard>
-        </>
+        </div>
       )}
     </div>
   )

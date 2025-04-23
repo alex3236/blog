@@ -37,7 +37,12 @@ const navLinks = [
 ]
 
 const friends: Friend[] = [
-  // { href: '/', imgUrl: 'https://via.placeholder.com/64', title: '星际厨房', description: <></> },
+  {
+    href: 'https://www.yuanshen.dev/',
+    imgUrl: '/static/assets/friends/yuanretro.png',
+    title: 'YuanRetro',
+    description: <>这是一个成分复杂的小站哦~</>,
+  },
 ]
 
 export { formatDate, formatTime, getValidDate, navLinks, friends }

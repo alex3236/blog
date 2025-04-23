@@ -1,15 +1,12 @@
 'use client'
 
 import Image from 'next/image'
-
-import { useRouter } from 'next/navigation'
 import React from 'react'
 
 const Card = ({ href, imgUrl, title, children }) => {
-  const router = useRouter()
   const handleClick = (e) => {
     e.stopPropagation()
-    router.push(href)
+    window.open(href, '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -18,7 +15,7 @@ const Card = ({ href, imgUrl, title, children }) => {
       onClick={handleClick}
       onKeyDown={(e) => e.key === 'Enter' && handleClick(e)}
       tabIndex={0}
-      className="cursor-pointer break-inside-avoid rounded-2xl border-3 border-sky-600 p-4 transition-colors dark:border-gray-400 dark:bg-gray-800"
+      className="cursor-pointer break-inside-avoid rounded-2xl border-3 border-sky-600 bg-sky-50 p-4 transition duration-200 hover:shadow-xl dark:border-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
     >
       <div className="flex">
         <div className="mr-4 flex-shrink-0">
