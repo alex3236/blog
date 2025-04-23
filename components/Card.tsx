@@ -54,7 +54,7 @@ const AlertCard = ({
 }: {
   className?: string
   children: React.ReactNode
-  type: 'primary' | 'blue' | 'yellow' | 'red'
+  type: 'primary' | 'blue' | 'yellow' | 'red' | 'pink'
 }) => {
   console.log(type)
   return (
