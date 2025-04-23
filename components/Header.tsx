@@ -23,23 +23,23 @@ const Header = () => {
             </p>
           </div>
         ) : (
-          <>
+          <div>
             <div className="float-right hidden p-0.5 md:block">
               <ThemeSwitch />
             </div>
-            <p className="text-lg text-gray-600 dark:text-gray-400">
+            <p className="text-gray-600 dark:text-gray-400">
               <Link
-                className="text-primary-600 dark:text-primary-400 font-serif font-bold"
+                className="text-primary-600 dark:text-primary-400 font-serif text-2xl font-bold"
                 href="/"
               >
-                星星碎片收容所&nbsp;
+                星星碎片收容所
               </Link>
               <br className="md:hidden" />
-              <span className="font-thin md:before:content-['•_']">
+              <span className="text-lg font-thin md:before:content-['•']">
                 把星星揉进面团里，用月光当裱花袋～
               </span>
             </p>
-          </>
+          </div>
         )}
       </header>
       <hr className="my-4" />
