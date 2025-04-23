@@ -44,18 +44,21 @@ const alertTypes = {
   blue: 'border-sky-600 bg-sky-50 text-sky-900 dark:bg-sky-900 dark:text-sky-300',
   yellow: 'border-yellow-600 bg-yellow-50 text-yellow-900 dark:bg-yellow-900 dark:text-yellow-300',
   red: 'border-red-600 bg-red-50 text-red-900 dark:bg-red-900 dark:text-red-300',
+  pink: 'border-pink-600 bg-pink-50 text-pink-900 dark:bg-pink-950 dark:text-pink-300',
 }
 
 const AlertCard = ({
+  className,
   type = 'primary',
   children,
 }: {
+  className?: string
   children: React.ReactNode
   type: 'primary' | 'blue' | 'yellow' | 'red'
 }) => {
   console.log(type)
   return (
-    <div className="px-4 pt-4">
+    <div className={className ?? 'px-4 pt-4'}>
       <div className={`${alertTypes[type]} w-full rounded-xl border-2 px-4 py-2 text-left`}>
         {children}
       </div>

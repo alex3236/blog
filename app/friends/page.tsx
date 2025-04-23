@@ -28,7 +28,7 @@ export default function FriendsPage() {
       )}
       {siteMetadata.friends.enable && (
         <div className="mt-10">
-          <AlertCard type="primary">
+          <AlertCard type="primary" className="pt-4 lg:px-4">
             <details>
               <summary className="cursor-pointer">
                 若您的文字也烘焙着星辰与月光，诚邀您交换一枚「奶油星云」
@@ -48,10 +48,10 @@ export default function FriendsPage() {
               </div>
             </details>
           </AlertCard>
-          <AlertCard type="blue">
+          <AlertCard type="pink" className="pt-4 lg:px-4">
             <details>
               <summary className="cursor-pointer">愿以这片「银河糖霜」点缀您的星图</summary>
-              <div className="my-3 w-fit rounded-2xl border-2 border-sky-900 p-3 text-sm lg:text-base dark:border-sky-300">
+              <div className="my-3 w-fit rounded-2xl border-2 border-pink-900 p-3 text-sm lg:text-base dark:border-pink-300">
                 <p>
                   <strong>星星碎片收容所</strong> • Alex3236
                 </p>
