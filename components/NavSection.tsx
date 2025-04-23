@@ -12,9 +12,9 @@ interface Props {
 function Section({ title, children }: Props) {
   return (
     <>
-      <dl className="mt-2 sm:mt-0 sm:pr-6 sm:text-right sm:align-text-top sm:text-lg">
-        <dd className="leading-6 font-medium text-gray-500 dark:text-gray-400">{title}</dd>
-      </dl>
+      <div className="mt-2 sm:mt-0 sm:pr-6 sm:text-right sm:align-text-top sm:text-lg">
+        <p className="leading-6 font-medium text-gray-500 dark:text-gray-400">{title}</p>
+      </div>
       <div className="sm:col-span-4">
         <div className="leading-8 tracking-tight text-gray-600 dark:text-gray-100">{children}</div>
       </div>

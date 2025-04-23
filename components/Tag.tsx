@@ -17,7 +17,7 @@ const Category = ({ text, className, count }: Props) => {
       }
     >
       {text.split(' ').join('-')}
-      {count && <span className="font-normal text-gray-500">({count})</span>}
+      {count && <span className="font-normal text-gray-500 dark:text-gray-400">({count})</span>}
     </Link>
   )
 }

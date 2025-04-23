@@ -48,13 +48,14 @@ function Pagination({ totalPages, currentPage, alignRight }: PaginationProps) {
     >
       {prevPage ? (
         <Link
+          aria-label="Previous Page"
           href={pathname + '?' + createQueryString('page', String(currentPage - 1))}
           className="p-2"
         >
           <FaCaretLeft className="h-5 w-5" />
         </Link>
       ) : (
-        <button disabled={true} className="p-2 opacity-50">
+        <button aria-label="No previous page available" disabled={true} className="p-2 opacity-50">
           <FaCaretLeft className="h-5 w-5" />
         </button>
       )}
@@ -63,13 +64,14 @@ function Pagination({ totalPages, currentPage, alignRight }: PaginationProps) {
       </span>
       {nextPage ? (
         <Link
+          aria-label="Next Page"
           href={pathname + '?' + createQueryString('page', String(currentPage + 1))}
           className="p-2"
         >
           <FaCaretRight className="h-5 w-5" />
         </Link>
       ) : (
-        <button disabled={true} className="p-2 opacity-50">
+        <button aria-label="No more page available" disabled={true} className="p-2 opacity-50">
           <FaCaretRight className="h-5 w-5" />
         </button>
       )}
@@ -116,14 +118,14 @@ export default function ListLayout({
                     </dl>
                     <div className="xl:col-span-4">
                       <div>
-                        <h3 className="text-2xl leading-8 font-bold tracking-tight">
+                        <h2 className="text-2xl leading-8 font-bold tracking-tight">
                           <Link
                             href={`/${path}`}
                             className="text-primary-600 dark:text-primary-500 font-serif"
                           >
                             {title}
                           </Link>
-                        </h3>
+                        </h2>
                         {/*<div className="flex flex-wrap">*/}
                         {/*  {tags?.map((tag) => <Tag key={tag} text={tag} />)}*/}
                         {/*</div>*/}

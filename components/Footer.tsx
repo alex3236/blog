@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer>
       <hr className="my-3" />
-      <div className="lg:text-md mb-12 text-sm text-gray-400">
+      <div className="lg:text-md mb-12 text-sm text-gray-500 dark:text-gray-400">
         <div className="float-left flex leading-none">
           <p>
             <Link href="/" className="font-bold">
