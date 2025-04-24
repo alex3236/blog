@@ -22,8 +22,8 @@ const Card = ({ href, imgUrl, title, children }) => {
           <div className="h-16 w-16 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-600">
             <Image
               src={imgUrl}
-              width={40}
-              height={40}
+              width={72}
+              height={72}
               alt="Avatar"
               className="h-full w-full object-cover"
             />
