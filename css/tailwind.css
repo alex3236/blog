@@ -81,6 +81,23 @@
     }
 }
 
+@utility prose {
+    blockquote {
+        p {
+            /* remove quotes */
+
+            &:first-of-type::before,
+            &:last-of-type::after {
+                content: none;
+            }
+
+            font-style: normal;
+            @apply text-gray-600;
+            @apply dark:text-gray-400;
+        }
+    }
+}
+
 .task-list-item::before {
     @apply hidden;
 }
