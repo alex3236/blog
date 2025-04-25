@@ -1,0 +1,68 @@
+---
+title: 用远程桌面，在后台执行需要自动点击的复杂任务
+date: '2025-04-25 20:00'
+tags: []
+category: 手记
+weather: 多云
+draft: false
+summary: 受 March7thAssistant 的 Wiki 启发，通过远程桌面实现自动点击《星穹铁道》，在后台完成日常任务。
+---
+
+在看 March7thAssistant 的 Wiki 时，发现它提到了一个思路，通过远程桌面实现自动点击《星穹铁道》，在后台完成日常任务。
+
+其 Wiki 中的三种方法都比较旧了，因此网上溜达了一圈，简单改进一下。
+
+## 0. 创建新用户
+
+创建新用户，并设置为管理员组，方便后续操作。
+
+```batch
+net user <username> <password> /add
+net localgroup administrators <username> /add
+```
+
+## 1. 修改组策略
+
+在组策略管理器 `gpedit.msc` 中的 `计算机配置 -> 管理模板 -> windows组件 -> 远程桌面服务 -> 远程桌面会话主机 -> 连接` 位置，调整以下选项：
+
+- 允许用户通过使用远程桌面服务进行远程连接：「启用」
+- 限制连接的数量（似乎是可选的）：「启用」，最大连接数设置为 2 或更多
+- 将远程桌面服务用户限制到单独的远程桌面服务会话：「启用」
+
+或者，使用以下注册表文件：
+
+```ini
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services]
+"fDenyTSConnections"=dword:00000000
+"MaxInstanceCount"=dword:00000002
+"fSingleSessionPerUser"=dword:00000001
+```
+
+## 2. 允许多用户同时登录
+
+最简单的办法是安装 [RDP Wrap](https://github.com/sebaxakerhtc/rdpwrap/releases)，测试时使用 Windows 11 24H2 仍一切正常。
+
+![RDP Wrap 的截图](https://s2.loli.net/2025/04/25/kjO13XSv4osHWzu.png)
+
+## 3. 注意安全
+
+如果你平时不需要使用远程桌面，建议在防火墙设置 `wf.msc` 中禁止外来连接：
+
+- 启用 `入站规则` 中的 `远程桌面 - 用户模式 (TCP-In)` 和 `远程桌面 - 用户模式 (UDP-In)` 规则
+- 将其作用域的 `远程 IP 地址` 设置为 `下列 IP 地址 -> 本地子网`。
+
+![](https://s2.loli.net/2025/04/25/n2MbkXylHF6VDrW.png)
+
+如果你平时要用远程桌面，建议把端口改了，并设置强密码。
+
+## 4. 登录
+
+使用远程桌面 `mstsc` 连接到新用户，登录后会自动创建一个新的会话（记得取消全屏，建议关闭远程桌面声音）。
+
+然后，运行游戏，随便找个支持改坐标的自动点击器，比如 [TinyTask](https://tinytask.net/)，就可以愉快地刷本了。
+
+如果最小化远程桌面窗口后，无法正常执行，那就用虚拟桌面（Win + Tab），创建一个新的虚拟桌面，把远程桌面扔过去。
+
+以上
