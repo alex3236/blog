@@ -82,6 +82,9 @@
 }
 
 @utility prose {
+    del {
+        @apply decoration-2
+    }
     blockquote {
         p {
             /* remove quotes */
