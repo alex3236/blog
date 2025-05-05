@@ -14,17 +14,23 @@ const Image = ({ src, width, height, ...rest }: ImageProps) => (
   <NextImage src={`${basePath || ''}${src}`} height={height ?? 0} width={width ?? 600} {...rest} />
 )
 
-const SimpleImage = ({ src, className, width, height, ...rest }: ImgProps) => (
-  <picture className="flex justify-center">
+const SimpleImage = ({ src, className, width, height, alt, ...rest }: ImgProps) => (
+  <picture className="flex flex-col items-center space-y-2">
     <PhotoView src={src}>
       <NextImage
         src={src}
+        alt={alt && alt.startsWith('#') ? alt.substring(1) : alt}
         width={600}
         height={0}
         className={`h-auto max-h-[1000px] w-auto max-w-72 min-w-0 rounded-lg border-2 border-gray-600 sm:max-w-96 xl:max-w-xl dark:border-gray-300 ${className}`}
         {...rest}
       />
     </PhotoView>
+    {alt && alt.startsWith('#') && (
+      <span className="mt-2 text-center text-sm text-gray-600 dark:text-gray-300">
+        {alt.substring(1)}
+      </span>
+    )}
   </picture>
 )
 
