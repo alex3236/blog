@@ -85,6 +85,7 @@
     del {
         @apply decoration-2
     }
+
     blockquote {
         p {
             /* remove quotes */
@@ -155,4 +156,9 @@ input:-webkit-autofill:focus {
 .linkicon {
     display: inline-block;
     vertical-align: middle;
+}
+
+/* Disable photo viewer toolbar */
+.PhotoView-Slider__BannerWrap {
+    display: none !important;
 }
