@@ -4,6 +4,7 @@ import siteMetadata from '@/data/siteMetadata'
 import Link from './Link'
 import { usePathname } from 'next/navigation'
 import ThemeSwitch from '@/components/ThemeSwitch'
+import Travelling from '@/components/Travelling'
 
 const Header = () => {
   const isHome = usePathname() === '/'
@@ -15,12 +16,13 @@ const Header = () => {
             <h1 className="text-primary-600 dark:text-primary-300 font-serif text-4xl leading-10 font-bold lg:text-[2.6rem]">
               {siteMetadata.title}
             </h1>
-            <div className="float-right hidden p-2.5 md:block">
-              <ThemeSwitch />
+            <div className="flex flex-col justify-between py-2 pl-0.5 text-gray-600 sm:flex-row sm:items-center dark:text-gray-400">
+              <p className="text-lg font-thin lg:text-xl">{siteMetadata.description}</p>
+              <span className="flex gap-3 pt-2">
+                <Travelling />
+                <ThemeSwitch />
+              </span>
             </div>
-            <p className="py-2 pl-0.5 text-lg font-thin text-gray-600 lg:text-xl dark:text-gray-400">
-              {siteMetadata.description}
-            </p>
           </div>
         ) : (
           <div>

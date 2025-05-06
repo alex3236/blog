@@ -35,7 +35,9 @@ const SimpleImage = ({ src, className, width, height, alt, ...rest }: ImgProps) 
 )
 
 const Gallery = ({ children }: { children: React.ReactNode }) => (
-  <div className="mx-auto flex max-w-6xl flex-wrap justify-center gap-4 p-4">{children}</div>
+  <div className="mx-auto flex max-w-6xl flex-wrap justify-center gap-4 p-4 [&_img]:max-w-64!">
+    {children}
+  </div>
 )
 
 export { Image, SimpleImage, Gallery }
