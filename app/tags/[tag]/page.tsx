@@ -52,7 +52,6 @@ export default async function TagPage(props: {
     pageNumber * POSTS_PER_PAGE
   )
 
-  console.log(pageNumber)
   const pagination = {
     currentPage: pageNumber,
     totalPages: totalPages,

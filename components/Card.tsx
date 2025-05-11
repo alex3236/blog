@@ -56,7 +56,6 @@ const AlertCard = ({
   children: React.ReactNode
   type: 'primary' | 'blue' | 'yellow' | 'red' | 'pink'
 }) => {
-  console.log(type)
   return (
     <div className={className ?? 'px-4 pt-4'}>
       <div className={`${alertTypes[type]} w-full rounded-xl border-2 px-4 py-2 text-left`}>

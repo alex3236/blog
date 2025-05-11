@@ -4,4 +4,4 @@ async function postbuild() {
   await rss()
 }
 
-postbuild()
+await postbuild()

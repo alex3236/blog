@@ -4,6 +4,8 @@ import siteMetadata from '@/data/siteMetadata'
 
 export const dynamic = 'force-static'
 
+export const rssAvailableSubpaths = ['tags', 'categories', '']
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = siteMetadata.siteUrl
 

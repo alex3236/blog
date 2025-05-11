@@ -51,7 +51,6 @@ export default async function CategoryPage(props: {
     (pageNumber - 1) * POSTS_PER_PAGE,
     pageNumber * POSTS_PER_PAGE
   )
-  console.log(pageNumber)
   const pagination = {
     currentPage: pageNumber,
     totalPages: totalPages,

@@ -1,4 +1,4 @@
-import { writeFileSync, mkdirSync } from 'fs'
+import { mkdirSync, writeFileSync } from 'fs'
 import path from 'path'
 import { slug } from 'github-slugger'
 import { escape } from 'pliny/utils/htmlEscaper.js'
@@ -39,6 +39,15 @@ const generateRss = (config, posts, page = 'feed.xml') => `
 `
 
 async function generateRSS(config, allBlogs, page = 'feed.xml') {
+  const generateSubRSS = async (pathname, data, filter) => {
+    for (const item of Object.keys(data)) {
+      const filteredPosts = allBlogs.filter((posts) => filter(posts, item))
+      const rss = generateRss(config, filteredPosts, `${pathname}/${item}/${page}`)
+      const rssPath = path.join(outputFolder, pathname, item)
+      mkdirSync(rssPath, { recursive: true })
+      writeFileSync(path.join(rssPath, page), rss)
+    }
+  }
   const publishPosts = allBlogs.filter((post) => post.draft !== true)
   // RSS for blog post
   if (publishPosts.length > 0) {
@@ -47,25 +56,15 @@ async function generateRSS(config, allBlogs, page = 'feed.xml') {
   }
 
   if (publishPosts.length > 0) {
-    for (const tag of Object.keys(tagData)) {
-      const filteredPosts = allBlogs.filter((post) => post.tags.map((t) => slug(t)).includes(tag))
-      const rss = generateRss(config, filteredPosts, `tags/${tag}/${page}`)
-      const rssPath = path.join(outputFolder, 'tags', tag)
-      mkdirSync(rssPath, { recursive: true })
-      writeFileSync(path.join(rssPath, page), rss)
-    }
-    for (const category of Object.keys(categoryData)) {
-      const filteredPosts = allBlogs.filter((post) => post.category === category)
-      const rss = generateRss(config, filteredPosts, `categories/${category}/${page}`)
-      const rssPath = path.join(outputFolder, 'categories', category)
-      mkdirSync(rssPath, { recursive: true })
-      writeFileSync(path.join(rssPath, page), rss)
-    }
+    await generateSubRSS('tags', tagData, (post, item) =>
+      post.tags.map((t) => slug(t)).includes(item)
+    )
+    await generateSubRSS('categories', categoryData, (post, item) => post.category === item)
   }
 }
 
-const rss = () => {
-  generateRSS(siteMetadata, allBlogs)
+const rss = async () => {
+  await generateRSS(siteMetadata, allBlogs)
   console.log('RSS feed generated...')
 }
 export default rss

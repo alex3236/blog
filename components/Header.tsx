@@ -5,6 +5,7 @@ import Link from './Link'
 import { usePathname } from 'next/navigation'
 import ThemeSwitch from '@/components/ThemeSwitch'
 import Travelling from '@/components/Travelling'
+import RSSButton from '@/components/RSSButton'
 
 const LargeHeader = () => (
   <div>
@@ -13,8 +14,9 @@ const LargeHeader = () => (
     </h1>
     <div className="flex flex-col justify-between py-2 pl-0.5 text-gray-600 sm:flex-row sm:items-center dark:text-gray-400">
       <p className="text-lg font-thin lg:text-xl">{siteMetadata.description}</p>
-      <span className="flex gap-3 pt-4 sm:pt-0">
+      <span className="flex gap-2 pt-4 sm:gap-3 sm:pt-0">
         <Travelling />
+        <RSSButton />
         <ThemeSwitch />
       </span>
     </div>
@@ -23,7 +25,8 @@ const LargeHeader = () => (
 
 const SmallHeader = () => (
   <div>
-    <div className="float-right hidden p-0.5 md:block">
+    <div className="float-right flex gap-2">
+      <RSSButton />
       <ThemeSwitch />
     </div>
     <p className="text-gray-600 dark:text-gray-400">
