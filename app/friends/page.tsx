@@ -5,7 +5,7 @@ import Link from 'next/link'
 import siteMetadata from '@/data/siteMetadata'
 import { genPageMetadata } from '../seo'
 
-export const metadata = genPageMetadata({ title: `朋友们 | ${siteMetadata.title}` })
+export const metadata = genPageMetadata({ title: `朋友们` })
 
 export default function FriendsPage() {
   return (

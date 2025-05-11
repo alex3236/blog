@@ -5,7 +5,7 @@ async function fetchHitokoto() {
     next: { revalidate: 300 }, // 5 minutes in seconds
   })
   if (!response.ok) {
-    console.error('Error fetching Hitokoto:', response.statusText)
+    console.warn('Error fetching Hitokoto:', response.statusText)
     return '哒哒哒...'
   }
   return await response.text()
