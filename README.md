@@ -27,6 +27,10 @@ Designed for one-author blogs with only one layout (PostSimple).
   - [x] Gallery
   - [x] Alert bar
   - [ ] ...
+- [x] RSS
+  - [x] Tags
+  - [x] Categories
+  - [x] All posts
 - [ ] Group component tree
 - [ ] ...
 
