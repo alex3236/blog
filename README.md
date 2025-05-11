@@ -32,9 +32,9 @@ Designed for one-author blogs with only one layout (PostSimple).
 
 ## Lighthouse
 
-<center>
+<p align="center">
   <img alt="Lighthouse screenshot" src="https://github.com/user-attachments/assets/6d6c8b0a-9021-43fb-9269-ea4df91d40b5" width="350px" />
-</center>
+</p>
 
 ## Licence
 
