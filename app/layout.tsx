@@ -10,6 +10,7 @@ import siteMetadata from '@/data/siteMetadata'
 import { ThemeProviders } from './theme-providers'
 import { Metadata } from 'next'
 import NextTopLoader from 'nextjs-toploader'
+import { AlertCard } from '@/components/Card'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
@@ -77,6 +78,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
           <SectionContainer>
             <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
+              <noscript>
+                <AlertCard type="red" className="pt-8">
+                  您的浏览器不支持 JavaScript，或您禁用了 JavaScript。某些功能可能无法正常工作。
+                </AlertCard>
+              </noscript>
               <Header />
               <main className="mb-auto text-gray-700 dark:text-gray-300">{children}</main>
             </SearchProvider>
