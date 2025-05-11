@@ -43,7 +43,7 @@ function Pagination({ totalPages, currentPage, alignRight }: PaginationProps) {
   return (
     <nav
       className={
-        'mb-4 flex items-center justify-end pr-4 xl:mb-0' + (alignRight ? ' col-start-5' : '')
+        'mb-4 flex items-center justify-end pr-4 md:mb-0' + (alignRight ? ' col-start-5' : '')
       }
     >
       {prevPage ? (
@@ -105,18 +105,18 @@ export default function ListLayout({
             {posts?.map((post) => {
               const { path, date, title, summary } = post
               return (
-                <li key={path} className="py-4 xl:py-2">
-                  <article className="xl:grid xl:grid-cols-5 xl:items-baseline xl:space-y-0">
-                    <dl className="xl:pr-6 xl:text-right xl:align-text-top xl:text-lg">
+                <li key={path} className="py-4 md:py-2">
+                  <article className="md:grid md:grid-cols-5 md:items-baseline md:space-y-0">
+                    <dl className="md:pr-6 md:text-right md:align-text-top md:text-lg">
                       <dt className="sr-only">Published on</dt>
                       <dd className="leading-6 font-medium text-gray-500 dark:text-gray-400">
                         <time dateTime={date}>
                           {formatDate(date, 'en-US')}
-                          <span className="hidden xl:block">{formatTime(date)}</span>
+                          <span className="hidden md:block">{formatTime(date)}</span>
                         </time>
                       </dd>
                     </dl>
-                    <div className="xl:col-span-4">
+                    <div className="md:col-span-4">
                       <div>
                         <h2 className="text-2xl leading-8 font-bold tracking-tight">
                           <Link
@@ -139,7 +139,7 @@ export default function ListLayout({
               )
             })}
           </ul>
-          <div className="mt-4 xl:grid xl:grid-cols-5">
+          <div className="mt-4 md:grid md:grid-cols-5">
             {pagination && pagination.totalPages > 1 && (
               <Pagination
                 currentPage={pagination.currentPage}
@@ -148,7 +148,7 @@ export default function ListLayout({
               />
             )}
             {searchBar && (
-              <SearchButtonWrapper className="relative w-full xl:col-span-4 xl:col-start-2">
+              <SearchButtonWrapper className="relative w-full md:col-span-4 md:col-start-2">
                 <span className="block w-full rounded-xl border-2 border-gray-400 px-4 py-2 text-left text-gray-500 dark:border-gray-900 dark:bg-gray-800 dark:text-gray-400">
                   搜搜搜…
                 </span>
