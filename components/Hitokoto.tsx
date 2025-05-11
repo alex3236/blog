@@ -1,8 +1,6 @@
-const HITOKOTO_API_URL = 'https://v1.hitokoto.cn/?encode=text'
-
-async function fetchHitokoto() {
-  const response = await fetch(HITOKOTO_API_URL, {
-    next: { revalidate: 300 }, // 5 minutes in seconds
+async function fetchHitokoto(apiUrl: string, timeout: number) {
+  const response = await fetch(apiUrl, {
+    next: { revalidate: timeout },
   })
   if (!response.ok) {
     console.warn('Error fetching Hitokoto:', response.statusText)
@@ -12,7 +10,7 @@ async function fetchHitokoto() {
 }
 
 export default async function Hitokoto() {
-  const quote = await fetchHitokoto()
+  const quote = await fetchHitokoto('https://v1.hitokoto.cn/?encode=text', 300)
 
   return <span>{quote}</span>
 }
