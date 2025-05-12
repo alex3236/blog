@@ -41,7 +41,7 @@ const generateRss = (config, posts, pathname = '', page = 'feed.xml') => `
 async function generateRSS(config, allBlogs, page = 'feed.xml') {
   const generateSubRSS = async (pathname, data, filter) => {
     for (const item of Object.keys(data)) {
-      const filteredPosts = allBlogs.filter((posts) => filter(posts, item))
+      const filteredPosts = sortPosts(allBlogs.filter((posts) => filter(posts, item)))
       const rss = generateRss(
         config,
         filteredPosts,
