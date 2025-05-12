@@ -22,11 +22,11 @@ const generateRssItem = (config, post) => `
   </item>
 `
 
-const generateRss = (config, posts, page = 'feed.xml') => `
+const generateRss = (config, posts, pathname = '', page = 'feed.xml') => `
   <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
       <title>${escape(config.title)}</title>
-      <link>${config.siteUrl}/blog</link>
+      <link>${config.siteUrl}/${pathname}</link>
       <description>${escape(config.description)}</description>
       <language>${config.language}</language>
       <managingEditor>${config.email} (${config.author})</managingEditor>
@@ -42,7 +42,12 @@ async function generateRSS(config, allBlogs, page = 'feed.xml') {
   const generateSubRSS = async (pathname, data, filter) => {
     for (const item of Object.keys(data)) {
       const filteredPosts = allBlogs.filter((posts) => filter(posts, item))
-      const rss = generateRss(config, filteredPosts, `${pathname}/${item}/${page}`)
+      const rss = generateRss(
+        config,
+        filteredPosts,
+        `${pathname}/${item}`,
+        `${pathname}/${item}/${page}`
+      )
       const rssPath = path.join(outputFolder, pathname, item)
       mkdirSync(rssPath, { recursive: true })
       writeFileSync(path.join(rssPath, page), rss)

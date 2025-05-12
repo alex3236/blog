@@ -2,6 +2,7 @@
 const siteMetadata = {
   title: '星星碎片收容所',
   author: 'Alex3236',
+  email: 'me@alex3236.moe',
   description: '把星星揉进面团里，用月光当裱花袋～',
   language: 'zh-cn',
   theme: 'system', // system, dark or light
