@@ -43,6 +43,12 @@ const friends: Friend[] = [
     title: 'YuanRetro',
     description: <>这是一个成分复杂的小站哦~</>,
   },
+  {
+    href: 'https://aimerny.top/',
+    imgUrl: '/static/assets/friends/aimerny.png',
+    title: 'Aimerny',
+    description: <>Ciallo～(∠・ω&lt; )⌒☆</>,
+  },
 ]
 
 export { formatDate, formatTime, getValidDate, navLinks, friends }

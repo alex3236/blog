@@ -4,7 +4,7 @@ import Image from 'next/image'
 import React from 'react'
 
 const Card = ({ href, imgUrl, title, children }) => {
-  const handleClick = (e) => {
+  const handleClick = (e: React.UIEvent) => {
     e.stopPropagation()
     window.open(href, '_blank', 'noopener,noreferrer')
   }
