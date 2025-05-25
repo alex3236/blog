@@ -62,7 +62,10 @@ export default function FriendsPage() {
                     FAVICON (PNG, 512*512)
                   </Link>
                   &nbsp;或&nbsp;
-                  <Link className="underline underline-offset-3" href="/static/assets/avatar.png">
+                  <Link
+                    className="underline underline-offset-3"
+                    href="https://github.com/alex3236.png"
+                  >
                     AVATAR (PNG, 450*450)
                   </Link>
                 </p>
