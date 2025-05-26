@@ -32,6 +32,7 @@ interface Friend {
 
 const navLinks = [
   { href: '/blog/stardust-baking', title: '星辰烘焙手记' },
+  { href: '/archives', title: '归档' },
   { href: 'https://alex3236.moe/', title: '关于我' },
   { href: '/friends', title: '朋友们' },
 ]

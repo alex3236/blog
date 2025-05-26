@@ -48,10 +48,9 @@ export default async function TagPage(props: {
   const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE)
   const pageNumber = parseInt(searchParams.page) || 1
   const initialDisplayPosts = filteredPosts.slice(
-    (pageNumber - 1) * POSTS_PER_PAGE,
-    pageNumber * POSTS_PER_PAGE
+    POSTS_PER_PAGE * (pageNumber - 1),
+    POSTS_PER_PAGE * pageNumber
   )
-
   const pagination = {
     currentPage: pageNumber,
     totalPages: totalPages,

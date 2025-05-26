@@ -12,6 +12,7 @@ Designed for one-author blogs with only one layout (PostSimple).
   - [x] Dark mode
   - [x] Mobile friendly
   - [x] Friends page
+  - [x] Archives page
   - [ ] Tags page
 - [x] Posts
   - [x] Category support
@@ -32,6 +33,9 @@ Designed for one-author blogs with only one layout (PostSimple).
   - [x] Categories
   - [x] All posts
 - [ ] Group component tree
+- [ ] Quick jump
+  - [ ] Enter page number
+  - [ ] Buttons
 - [ ] ...
 
 ## Lighthouse
