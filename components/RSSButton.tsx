@@ -14,6 +14,7 @@ export default function RSSButton() {
     isRssAvailable && (
       <Link
         href={isRootPath ? '/feed.xml' : `${pathname}/feed.xml`}
+        area-label="RSS Feed"
         className="flex items-center justify-center rounded-md border-2 border-gray-400 p-1 text-gray-600 dark:border-gray-500 dark:bg-gray-800 dark:text-gray-400"
       >
         <FaRss className="h-5 w-5" />
