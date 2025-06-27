@@ -38,12 +38,13 @@ export default function ListLayoutWithYears({
     <>
       <div>
         <div className="pt-6 pb-6">
-          <h1 className="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:hidden sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100">
+          <h1 className="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-12 md:text-6xl md:leading-16 dark:text-gray-100">
             {title}
           </h1>
         </div>
-        <div className="flex sm:space-x-24">
-          <div className="hidden h-full max-h-screen max-w-[280px] min-w-[280px] flex-wrap overflow-auto rounded-sm bg-gray-50 pt-5 shadow-md sm:flex dark:bg-gray-900/70 dark:shadow-gray-800/40">
+        <div className="flex flex-col md:flex-row md:space-x-24">
+          {/* Modified the div for year chooser */}
+          <div className="h-full max-h-screen max-w-full flex-wrap overflow-auto rounded-sm border bg-gray-50 pt-5 shadow-md md:max-w-[180px] md:min-w-[180px] dark:border-gray-700 dark:bg-gray-900/70 dark:shadow-gray-800/40">
             <div className="px-6 py-4">
               {pathname.startsWith('/archives') ? (
                 <h3 className="text-primary-500 font-bold uppercase">All Posts</h3>
@@ -55,10 +56,11 @@ export default function ListLayoutWithYears({
                   All Posts
                 </Link>
               )}
-              <ul>
+              {/* 修改年份列表容器样式 */}
+              <ul className="flex flex-wrap gap-2">
                 {years.map((year) => {
                   return (
-                    <li key={year} className="my-3">
+                    <li key={year} className="mt-2">
                       {decodeURI(pathname.split('/archives/')[1]) === year ? (
                         <h3 className="text-primary-500 inline px-3 py-2 text-sm font-bold uppercase">
                           {`${year} (${yearCounts[year]})`}
