@@ -81,7 +81,7 @@ export default function ThemeSwitch() {
 
   return (
     <div ref={containerRef} className="relative inline-block text-left">
-      <div className="flex items-center rounded-md border-2 border-gray-400 p-1 text-gray-600 dark:border-gray-500 dark:bg-gray-800 dark:text-gray-400">
+      <div className="flex items-center rounded-md p-1 text-gray-600 dark:bg-gray-800 dark:text-gray-400">
         <button
           aria-label="Theme switcher"
           className="cursor-pointer"
