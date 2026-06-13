@@ -1,0 +1,29 @@
+---
+import { siteMetadata } from '../data/siteMetadata'
+---
+
+<footer>
+  <hr class="my-3" />
+  <div class="mb-12 text-sm text-gray-500 lg:text-md dark:text-gray-400">
+    <div class="float-left flex leading-none">
+      <p>
+        <a href="/" class="font-bold">{siteMetadata.title}</a>.
+      </p>
+    </div>
+    {siteMetadata.icp && (
+      <div class="flex justify-end">
+        <a href={siteMetadata.icp.url} class="font-bold" target="_blank" rel="noopener noreferrer">
+          {siteMetadata.icp.text}
+        </a>
+      </div>
+    )}
+    <div class="flex justify-end">
+      &copy; {new Date().getFullYear()}
+      &nbsp;
+      <span class="font-bold">{siteMetadata.author}</span>.&nbsp;
+      <a class="break-words" href={siteMetadata.siteRepo} target="_blank" rel="noopener noreferrer">
+        Astro &times; Moricolor
+      </a>.
+    </div>
+  </div>
+</footer>

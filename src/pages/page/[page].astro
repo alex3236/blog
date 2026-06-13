@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { getPublishedPosts } from '../../data/posts'
+import { siteMetadata } from '../../data/siteMetadata'
+import PostList from '../../components/PostList.astro'
+import NavSection from '../../components/NavSection.astro'
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts()
+  const totalPages = Math.ceil(posts.length / 5)
+  return Array.from({ length: totalPages }, (_, i) => ({
+    params: { page: String(i + 1) },
+  }))
+}
+
+const { page } = Astro.params
+const publishedPosts = await getPublishedPosts()
+const totalPages = Math.ceil(publishedPosts.length / 5)
+const currentPage = parseInt(page || '1')
+const pagePosts = publishedPosts.slice((currentPage - 1) * 5, currentPage * 5)
+---
+
+<BaseLayout title={`${siteMetadata.title} | Alex3236 - Page ${currentPage}`}>
+  <PostList currentPage={currentPage} totalPages={totalPages} posts={pagePosts} />
+  <NavSection />
+</BaseLayout>

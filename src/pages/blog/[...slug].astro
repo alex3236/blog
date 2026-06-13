@@ -1,0 +1,128 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { getCollection } from 'astro:content'
+import { getAdjacentPosts } from '../../data/posts'
+import { formatDate } from '../../data/navLinks'
+import { siteMetadata } from '../../data/siteMetadata'
+import IconSeal from '../../components/IconSeal'
+import ImagePreview from '../../components/ImagePreview.astro'
+import CodeHighlight from '../../components/CodeHighlight.astro'
+
+const postModules = import.meta.glob<any>('/posts/**/*.typ')
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', p => !p.data.draft)
+  return posts.map(p => ({
+    params: { slug: p.id },
+  }))
+}
+
+const { slug } = Astro.params
+const posts = await getCollection('posts')
+const post = posts.find(p => p.id === slug)
+
+if (!post) {
+  return Astro.redirect('/404')
+}
+
+// Find the matching Typst module by slug → file path mapping
+const entry = Object.entries(postModules).find(([path]) => path.endsWith(`/${slug}.typ`))
+const Content = entry ? (await entry[1]()).default : null
+
+const { prev, next } = await getAdjacentPosts(post.id)
+const pageUrl = new URL(Astro.url.pathname, siteMetadata.siteUrl).href
+const ldJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  datePublished: post.data.date,
+  dateModified: post.data.date,
+  description: post.data.summary || post.data.description || '',
+  url: pageUrl,
+})
+---
+
+<BaseLayout title={post.data.title} description={post.data.summary || post.data.description}>
+  <script type="application/ld+json" set:html={ldJson}></script>
+  <article>
+    <ImagePreview />
+    <CodeHighlight />
+    <div>
+      <header>
+        <div class="space-y-1 border-b border-gray-200 pb-5 dark:border-gray-700">
+          <div>
+            <h1 class="font-serif text-3xl leading-9 font-bold tracking-tight text-gray-700 md:text-4xl md:leading-16 dark:text-gray-100">
+              {post.data.title}
+            </h1>
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+            <dl class="contents">
+              <div class="flex items-center gap-2 md:pl-1 mt-1 md:mt-4">
+                <dt class="sr-only">Last modified on</dt>
+                <dd class="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
+                  <time datetime={post.data.date}>
+                    {formatDate(post.data.date, siteMetadata.locale)}
+                  </time>
+                  {post.data.weather && <span>, {post.data.weather}</span>}
+                </dd>
+              </div>
+            </dl>
+            <div>
+              {post.data.draft && !post.data.page && (
+                <span class="mr-3 rounded-full border-2 border-red-500 px-2 text-sm font-medium text-red-600 dark:text-red-400">
+                  草稿
+                </span>
+              )}
+              {post.data.category && (
+                <><a href={`/categories/${post.data.category}`} class="mr-3 rounded-full border-2 border-sky-500 px-2 text-sm font-medium text-sky-700 uppercase hover:text-sky-500 dark:text-sky-500 dark:hover:text-sky-400">{post.data.category}</a></>
+              )}
+              {(Array.isArray(post.data.tags) ? post.data.tags : []).map((tag) => (
+                <><a href={`/tags/${tag}`} class="text-primary-700 border-primary-500 hover:text-primary-500 dark:hover:text-primary-400 dark:text-primary-500 mr-3 rounded-full border-2 px-2 text-sm font-medium uppercase">{tag}</a></>
+              ))}
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-4 xl:divide-y-0 dark:divide-gray-700">
+        <div class="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
+          <div class="prose dark:prose-invert max-w-none pt-10 pb-8">
+            {Content ? <Content /> : <p>Loading...</p>}
+            {!post.data.draft && siteMetadata.showSeal && (
+              <div class="flex justify-end">
+                <IconSeal client:load className="h-14 w-14" />
+              </div>
+            )}
+          </div>
+        </div>
+        {(prev?.id || next?.id) && (
+          <footer>
+            <div class="text-sm font-medium sm:flex-row sm:justify-between sm:text-base">
+              {prev?.id && prev?.title && (
+                <div class="flex justify-start pt-2">
+                  <a
+                    href={`/blog/${prev.id}`}
+                    class="text-primary-600 hover:text-primary-600 dark:hover:text-primary-400"
+                    aria-label={`Previous post: ${prev.title}`}
+                  >
+                    &larr; {prev.title}
+                  </a>
+                </div>
+              )}
+              {next?.id && next?.title && (
+                <div class="flex justify-end pt-2">
+                  <a
+                    href={`/blog/${next.id}`}
+                    class="text-primary-600 hover:text-primary-600 dark:hover:text-primary-400"
+                    aria-label={`Next post: ${next.title}`}
+                  >
+                    {next.title} &rarr;
+                  </a>
+                </div>
+              )}
+            </div>
+          </footer>
+        )}
+      </div>
+    </div>
+  </article>
+</BaseLayout>

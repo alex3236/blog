@@ -1,0 +1,89 @@
+---
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
+import ScrollTopAndComment from '../components/ScrollTopAndComment'
+import { siteMetadata } from '../data/siteMetadata'
+import '../styles/global.css'
+import hljsCss from 'highlight.js/styles/github.css?inline'
+
+interface Props {
+  title: string
+  description?: string
+  ogImage?: string
+}
+
+const { title, description, ogImage } = Astro.props
+const fullTitle = title.includes(siteMetadata.title) ? title : `${title} | ${siteMetadata.title}`
+const pageDescription = description || siteMetadata.description
+---
+
+<!doctype html>
+<html lang="zh-cn" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, siteMetadata.siteUrl).href} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={new URL(Astro.url.pathname, siteMetadata.siteUrl).href} />
+    <meta property="og:site_name" content={siteMetadata.title} />
+    <meta property="og:locale" content="zh-CN" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+    <style set:html={hljsCss} />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪐</text></svg>" />
+    <link rel="icon" type="image/png" sizes="128x128" href="/static/assets/favicon.png" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
+    <script is:inline>
+      ;((
+        e, t, r, n, o, i, a, l
+      ) => {
+        let u = document.documentElement,
+          s = ['light', 'dark']
+        function c(t) {
+          var r
+          ;(Array.isArray(e) ? e : [e]).forEach((e) => {
+            let r = 'class' === e,
+              n = r && i ? o.map((e) => i[e] || e) : o
+            r
+              ? (u.classList.remove(...n), u.classList.add(i && i[t] ? i[t] : t))
+              : u.setAttribute(e, t)
+          }),
+            (r = t),
+            l && s.includes(r) && (u.style.colorScheme = r)
+        }
+        if (n) c(n)
+        else
+          try {
+            let e = localStorage.getItem(t) || r,
+              n =
+                a && 'system' === e
+                  ? window.matchMedia('(prefers-color-scheme: dark)').matches
+                    ? 'dark'
+                    : 'light'
+                  : e
+            c(n)
+          } catch (e) {}
+      })('class', 'theme', 'system', null, ['light', 'dark'], null, true, true)
+    </script>
+  </head>
+  <body class="bg-white px-4 text-black antialiased sm:px-6 xl:px-0 dark:bg-gray-900 dark:text-white">
+    <section class="mx-auto max-w-5xl">
+      <Header />
+      <main class="mb-auto text-gray-700 dark:text-gray-300">
+        <slot />
+      </main>
+      <Footer />
+    </section>
+    <ScrollTopAndComment client:load />
+  </body>
+</html>

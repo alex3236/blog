@@ -1,0 +1,57 @@
+---
+import { getAllTags } from '../data/posts'
+import { navLinks } from '../data/navLinks'
+import Hitokoto from './Hitokoto.tsx'
+
+const tags = await getAllTags()
+---
+
+<nav class="mb-12">
+  <h1 class="mb-6 text-4xl leading-16 font-extrabold tracking-tight text-gray-700 dark:text-gray-200">
+    ヾ(•ω•`)o
+  </h1>
+  <div class="sm:grid sm:grid-cols-5 sm:items-baseline sm:space-y-0">
+    <div class="mt-2 sm:mt-0 sm:pr-6 sm:text-right sm:align-text-top sm:text-lg">
+      <p class="font-medium leading-6 text-gray-500 dark:text-gray-400">Hitokoto</p>
+    </div>
+    <div class="sm:col-span-4">
+      <div class="leading-8 tracking-tight text-gray-600 dark:text-gray-100">
+        <p class="font-bold text-gray-600 dark:text-gray-300">
+          <Hitokoto client:load />
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-2 sm:mt-0 sm:pr-6 sm:text-right sm:align-text-top sm:text-lg">
+      <p class="font-medium leading-6 text-gray-500 dark:text-gray-400">Categories</p>
+    </div>
+    <div class="sm:col-span-4">
+      <div class="leading-8 tracking-tight text-gray-600 dark:text-gray-100">
+        {tags.map(({ tag, count }) => (
+          <span class="pr-3 leading-8 tracking-tight text-gray-600 dark:text-gray-300">
+            <a href={`/tags/${tag}`} class="font-bold text-primary-600 hover:text-primary-500 dark:text-primary-400">
+              <span class="font-normal text-gray-500 dark:text-gray-400">&amp;</span>{tag}<span class="font-normal text-gray-500 dark:text-gray-400">({count})</span>
+            </a>
+          </span>
+        ))}
+      </div>
+    </div>
+
+    <div class="mt-2 sm:mt-0 sm:pr-6 sm:text-right sm:align-text-top sm:text-lg">
+      <p class="font-medium leading-6 text-gray-500 dark:text-gray-400">Pages &amp; Links</p>
+    </div>
+    <div class="sm:col-span-4">
+      <div class="leading-8 tracking-tight text-gray-600 dark:text-gray-100">
+        {navLinks.map((link) => (
+          <span class="pr-3 leading-8 tracking-tight text-gray-600 dark:text-gray-300">
+            {link.href.startsWith('http') ? (
+              <a class="font-bold before:text-gray-500 before:content-['#'] dark:before:text-gray-400" href={link.href} target="_blank" rel="noopener noreferrer">{link.title}</a>
+            ) : (
+              <a class="font-bold before:text-gray-500 before:content-['#'] dark:before:text-gray-400" href={link.href}>{link.title}</a>
+            )}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+</nav>

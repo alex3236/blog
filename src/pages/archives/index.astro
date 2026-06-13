@@ -1,0 +1,7 @@
+---
+import { getAllYears } from '../../data/posts'
+
+const years = await getAllYears()
+const latest = years.length > 0 ? years[0] : 2025
+
+return Astro.redirect(`/archives/${latest}`)

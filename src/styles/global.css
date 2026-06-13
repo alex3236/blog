@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: theme('colors.gray.200');
+  }
+
+  a,
+  button {
+    outline-color: theme('colors.primary.700');
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid;
+    border-radius: theme('borderRadius.sm');
+    outline-color: theme('colors.primary.700');
+  }
+}
+
+.prose {
+  a {
+    @apply break-words;
+  }
+
+  ul, ol {
+    @apply my-3 space-y-1;
+  }
+
+  h2 {
+    font-size: 1.5em;
+    font-weight: 800;
+    margin-top: 1.6em;
+    margin-bottom: 0.8em;
+  }
+
+  h3 {
+    font-size: 1.25em;
+    font-weight: 700;
+    margin-top: 1.4em;
+    margin-bottom: 0.6em;
+  }
+
+  h4 {
+    font-size: 1.125em;
+    font-weight: 600;
+    margin-top: 1.2em;
+    margin-bottom: 0.5em;
+  }
+
+  h5 {
+    font-size: 1em;
+    font-weight: 700;
+    margin-top: 1em;
+    margin-bottom: 0.3em;
+  }
+
+  h5 + * {
+    margin-top: 0;
+  }
+
+  h6 {
+    font-size: 1em;
+    font-weight: 600;
+    margin-top: 0.8em;
+    margin-bottom: 0.2em;
+  }
+
+  h6 + * {
+    margin-top: 0;
+  }
+}
+
+.dark .prose {
+  --tw-prose-body: #e5e7eb;
+}
+.dark .prose a {
+  --tw-prose-links: var(--tw-prose-body);
+}
+
+/* Shiki — CSS-variable-based dual theme (catppuccin) */
+.prose .shiki {
+  @apply my-4 overflow-x-auto rounded-lg p-4 text-sm;
+  background-color: var(--shiki-light-bg);
+  color: var(--shiki-light);
+}
+.prose .shiki span {
+  color: var(--shiki-light) !important;
+}
+html.dark .prose .shiki {
+  --shiki-dark-bg: #000 !important;
+}
+html.dark .prose .shiki,
+html.dark .prose .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+}
+
+.dark .hljs-comment,
+.dark .hljs-quote { color: #8b949e; }
+.dark .hljs-keyword,
+.dark .hljs-selector-tag,
+.dark .hljs-type { color: #ff7b72; }
+.dark .hljs-string,
+.dark .hljs-addition { color: #a5d6ff; }
+.dark .hljs-number,
+.dark .hljs-literal { color: #79c0ff; }
+.dark .hljs-title,
+.dark .hljs-function { color: #d2a8ff; }
+.dark .hljs-attr,
+.dark .hljs-attribute { color: #ffa657; }
+.dark .hljs-built_in { color: #ff7b72; }
+.dark .hljs-meta { color: #8b949e; }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
+}

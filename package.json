@@ -1,0 +1,49 @@
+{
+  "name": "blog",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "lint": "eslint --fix src",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@astrojs/react": "^5.0.0",
+    "@astrojs/rss": "^4.0.0",
+    "@astrojs/sitemap": "^3.7.0",
+    "@astrojs/tailwind": "^6.0.2",
+    "@myriaddreamin/typst-ts-node-compiler": "^0.7.0",
+    "@myriaddreamin/typst-ts-renderer": "^0.7.0",
+    "@myriaddreamin/typst.ts": "^0.7.0",
+    "@tailwindcss/typography": "^0.5.20",
+    "@vitejs/plugin-react": "^4.7.0",
+    "astro": "^5.7.0",
+    "astro-typst": "^0.12.3",
+    "cheerio": "^1.2.0",
+    "github-slugger": "^2.0.0",
+    "highlight.js": "^11.11.1",
+    "medium-zoom": "^1.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "reading-time": "^1.5.0",
+    "shiki": "^4.2.0",
+    "tailwindcss": "^3.4.19",
+    "vite": "^7.3.5"
+  },
+  "overrides": {
+    "@vitejs/plugin-react": "^4.7.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.14.0",
+    "prettier": "^3.0.0",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "typescript": "^5.8.0"
+  }
+}

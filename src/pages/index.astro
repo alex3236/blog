@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import { getPublishedPosts } from '../data/posts'
+import { siteMetadata } from '../data/siteMetadata'
+import PostList from '../components/PostList.astro'
+import NavSection from '../components/NavSection.astro'
+
+const publishedPosts = await getPublishedPosts()
+const totalPages = Math.ceil(publishedPosts.length / 5)
+const currentPage = 1
+const pagePosts = publishedPosts.slice(0, 5)
+---
+
+<BaseLayout title={`${siteMetadata.title} | ${siteMetadata.author}`}>
+  <PostList currentPage={currentPage} totalPages={totalPages} posts={pagePosts} />
+  <NavSection />
+</BaseLayout>

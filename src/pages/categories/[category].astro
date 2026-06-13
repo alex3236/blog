@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { getAllCategories, getPostsByCategory } from '../../data/posts'
+
+function formatDateShort(dateStr: string): string {
+  const d = new Date(dateStr)
+  if (isNaN(d.getTime())) return dateStr
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`
+}
+
+export async function getStaticPaths() {
+  const categories = await getAllCategories()
+  return categories.map(({ category }) => ({
+    params: { category },
+  }))
+}
+
+const { category } = Astro.params
+const posts = await getPostsByCategory(category || '')
+---
+
+<BaseLayout title={`分类: ${category}`}>
+  <div class="pt-6 pb-5">
+    <h1 class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100">
+      分类: {category}
+    </h1>
+    <div class="space-y-4">
+      {posts.map((post) => (
+        <article class="border-b border-gray-200 pb-4 dark:border-gray-700">
+          <div>
+            <time datetime={post.data.date} class="text-sm text-gray-500 dark:text-gray-400">
+              {formatDateShort(post.data.date)}
+            </time>
+            <h3 class="text-xl font-bold">
+              <a
+                href={`/blog/${post.id}`}
+                class="text-gray-900 hover:text-primary-600 dark:text-gray-100 dark:hover:text-primary-400"
+              >
+                {post.data.title}
+              </a>
+            </h3>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

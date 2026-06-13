@@ -1,0 +1,100 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import SearchBar from './SearchBar.tsx'
+
+type Post = CollectionEntry<'posts'> & { readingTime?: { text: string }; tagSlugs?: string[]; categorySlug?: string }
+
+interface Props {
+  currentPage: number
+  totalPages: number
+  posts: Post[]
+}
+
+const { currentPage, totalPages, posts } = Astro.props
+const searchData = posts.map(p => ({ slug: p.id, title: p.data.title }))
+
+function formatListDate(dateStr: string): { day: string; time: string } {
+  const d = new Date(dateStr)
+  if (isNaN(d.getTime())) return { day: dateStr, time: '' }
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const day = `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`
+  const hours = String(d.getHours()).padStart(2, '0')
+  const minutes = String(d.getMinutes()).padStart(2, '0')
+  return { day, time: `${hours}:${minutes}` }
+}
+---
+
+<div>
+  <div class="pt-6 pb-5">
+    <h1 class="text-4xl leading-10 font-extrabold tracking-tight text-gray-700 sm:leading-14 dark:text-gray-200">
+      纪事
+    </h1>
+    <ul>
+      {posts.map((post) => {
+        const { day, time } = formatListDate(post.data.date)
+        return (
+          <li class="py-4 md:py-2">
+            <article class="md:grid md:grid-cols-5 md:items-baseline md:space-y-0">
+              <dl class="md:pr-6 md:text-right md:align-text-top md:text-lg">
+                <dt class="sr-only">Published on</dt>
+                <dd class="font-medium leading-6 text-gray-500 dark:text-gray-400">
+                  <time datetime={post.data.date}>
+                    {day}
+                    <span class="hidden md:block">{time}</span>
+                  </time>
+                </dd>
+              </dl>
+              <div class="md:col-span-4">
+                <div>
+                  <h2 class="text-2xl font-bold leading-8 tracking-tight">
+                    <a
+                      class="font-serif text-primary-600 dark:text-primary-500"
+                      href={`/blog/${post.id}`}
+                    >
+                      {post.data.title}
+                    </a>
+                  </h2>
+                </div>
+                <div class="prose max-w-none text-gray-500 dark:text-gray-300">
+                  {post.data.summary || post.data.description}
+                </div>
+              </div>
+            </article>
+          </li>
+        )
+      })}
+    </ul>
+    <div class="mt-4 md:grid md:grid-cols-5">
+      <nav class="mb-4 flex items-center justify-end pr-4 md:mb-0">
+        {currentPage > 1 ? (
+          <a class="p-2" aria-label="Previous Page" href={currentPage === 2 ? '/' : `/page/${currentPage - 1}/`}>
+            <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 256 512" class="h-5 w-5" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.4 278.6c-12.5-12.5-12.5-32.8 0-45.3l128-128c9.2-9.2 22.9-11.9 34.9-6.9s19.8 16.6 19.8 29.6l0 256c0 12.9-7.8 24.6-19.8 29.6s-25.7 2.2-34.9-6.9l-128-128z"></path>
+            </svg>
+          </a>
+        ) : (
+          <button aria-label="No previous page available" disabled class="p-2 opacity-50">
+            <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 256 512" class="h-5 w-5" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.4 278.6c-12.5-12.5-12.5-32.8 0-45.3l128-128c9.2-9.2 22.9-11.9 34.9-6.9s19.8 16.6 19.8 29.6l0 256c0 12.9-7.8 24.6-19.8 29.6s-25.7 2.2-34.9-6.9l-128-128z"></path>
+            </svg>
+          </button>
+        )}
+        <span class="mx-2">{currentPage} / {totalPages}</span>
+        {currentPage < totalPages ? (
+          <a class="p-2" aria-label="Next Page" href={`/page/${currentPage + 1}/`}>
+            <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 256 512" class="h-5 w-5" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+              <path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
+            </svg>
+          </a>
+        ) : (
+          <button aria-label="No next page available" disabled class="p-2 opacity-50">
+            <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 256 512" class="h-5 w-5" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+              <path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
+            </svg>
+          </button>
+        )}
+      </nav>
+      <SearchBar client:load posts={searchData} />
+    </div>
+  </div>
+</div>

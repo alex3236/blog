@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { getPostsByYear, getAllYears } from '../../data/posts'
+
+function formatDateShort(dateStr: string): string {
+  const d = new Date(dateStr)
+  if (isNaN(d.getTime())) return dateStr
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`
+}
+
+export async function getStaticPaths() {
+  const years = await getAllYears()
+  if (years.length === 0) return [{ params: { year: '2025' } }]
+  return years.map(year => ({ params: { year: String(year) } }))
+}
+
+const { year } = Astro.params
+const yearNum = parseInt(year || '0')
+const posts = await getPostsByYear(yearNum)
+const allYears = await getAllYears()
+---
+
+<BaseLayout title={`归档 ${year}`}>
+  <div class="pt-6 pb-5">
+    <h1 class="text-4xl leading-10 font-extrabold tracking-tight text-gray-700 sm:leading-14 dark:text-gray-200">
+      归档
+    </h1>
+    <div class="mb-6 mt-3 flex flex-wrap gap-2">
+      {allYears.map((y) => (
+        <a
+          href={`/archives/${y}`}
+          class={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${
+            y === yearNum
+              ? 'bg-primary-600 text-white'
+              : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
+          }`}
+        >
+          {y}
+        </a>
+      ))}
+    </div>
+    <ul>
+      {posts.map((post) => (
+        <li class="py-4 md:py-2">
+          <article class="md:grid md:grid-cols-5 md:items-baseline md:space-y-0">
+            <dl class="md:pr-6 md:text-right md:align-text-top md:text-lg">
+              <dt class="sr-only">Published on</dt>
+              <dd class="font-medium leading-6 text-gray-500 dark:text-gray-400">
+                <time datetime={post.data.date}>
+                  {formatDateShort(post.data.date)}
+                </time>
+              </dd>
+            </dl>
+            <div class="md:col-span-4">
+              <h2 class="text-2xl font-bold leading-8 tracking-tight">
+                <a
+                  class="font-serif text-primary-600 dark:text-primary-500"
+                  href={`/blog/${post.id}`}
+                >
+                  {post.data.title}
+                </a>
+              </h2>
+            </div>
+          </article>
+        </li>
+      ))}
+    </ul>
+    {posts.length === 0 && (
+      <p class="text-gray-500 dark:text-gray-400">该年份没有文章。</p>
+    )}
+  </div>
+</BaseLayout>
