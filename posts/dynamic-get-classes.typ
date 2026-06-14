@@ -13,7 +13,7 @@
 
 在 #link("https://stackoverflow.com/questions/69666501/list-all-classes-in-a-package-on-android/")[StackOverFlow] 上找到了一个用 `DexFile` 动态获取包中所有类的实现：
 
-```kotlin
+```java
 fun getClasses(context: Context, packageName: String): List<Class<*>> {
     val dexFile = DexFile(context.applicationInfo.sourceDir)
     return dexFile.entries().asSequence()
@@ -24,7 +24,7 @@ fun getClasses(context: Context, packageName: String): List<Class<*>> {
 
 然而，`DexFile` 已被弃用。故最终改用 #link("https://javadoc.io/doc/org.smali/dexlib2/2.3.4/org/jf/dexlib2/DexFileFactory.html")[`dexlib2`] 来实现：
 
-```kotlin
+```java
 fun getClasses(context: Context, packageName: String): List<String> {
 	val dexFile = DexFileFactory.loadDexFile(File(context.applicationInfo.sourceDir), Opcodes.getDefault())
 	return dexFile.classes

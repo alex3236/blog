@@ -104,7 +104,7 @@
 
 + 写代码：
 
-    ```kotlin
+    ```java
     override fun onHook() = encase {
             System.loadLibrary("dexkit")  // 加载 DexKit 库
             loadApp("com.oplus.battery") {

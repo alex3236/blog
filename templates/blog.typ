@@ -29,6 +29,8 @@
 
   // Base text
   set text(size: 16pt, lang: "zh", region: "cn")
+  
+  set raw(theme: auto)
 
   // Images — image() is overridden to output <img> directly for remote URLs
   // Blockquotes
@@ -54,23 +56,6 @@
         class: "my-6 flex flex-col items-center space-y-2",
       ), { it.body })
     }
-  }
-
-  // Code blocks
-  show raw.where(block: true): it => {
-    html.elem("pre", attrs: (
-      class: "my-4 overflow-x-auto rounded-lg bg-gray-100 p-4 text-sm text-gray-900 dark:bg-black dark:text-gray-100",
-    ), {
-      html.elem("code", attrs: (
-        class: if it.lang != none { "language-" + str(it.lang) } else { "nohighlight" },
-      ), it.text)
-    })
-  }
-
-  show raw.where(block: false): it => {
-    html.elem("code", attrs: (
-      class: "rounded bg-gray-100 px-1 py-0.5 text-sm text-pink-600 dark:bg-gray-800 dark:text-pink-400",
-    ), it.text)
   }
 
   // Frontmatter label for astro-typst (must appear first in output)

@@ -111,7 +111,7 @@ public class DexHookHelper {
 
 一段 Kotlin：
 
-```kotlin
+```java
 data class XposedHook(
     val packageName: String,
     val className: String,
@@ -157,13 +157,15 @@ echo "All JDKs registered"
 
 == 数学公式
 
-#quote()[Typst 的 HTML 导出暂不支持渲染数学公式，方程在导出时会被忽略。以下是几则数学公式的源码形式，待未来支持后再放开。]
+Typst 内置了强大的数学公式排版能力。hAST 渲染模式下公式可以正常输出。
 
-源代码：`E = m c^2`
+爱因斯坦质能方程：$E = m c^2$
 
-源代码：`integral_a^b f(x) dif x = F(b) - F(a)`
+微积分基本定理：
 
-源代码：`P(A | B) = (P(B | A) P(A)) / P(B)`
+$ integral_a^b f(x) dif x = F(b) - F(a) $
+
+贝叶斯定理：$ P(A | B) = (P(B | A) P(A)) / P(B) $
 
 == 水平分割线和表格
 

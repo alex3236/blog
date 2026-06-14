@@ -6,7 +6,6 @@ import { formatDate } from '../../data/navLinks'
 import { siteMetadata } from '../../data/siteMetadata'
 import IconSeal from '../../components/IconSeal'
 import ImagePreview from '../../components/ImagePreview.astro'
-import CodeHighlight from '../../components/CodeHighlight.astro'
 
 const postModules = import.meta.glob<any>('/posts/**/*.typ')
 
@@ -46,7 +45,6 @@ const ldJson = JSON.stringify({
   <script type="application/ld+json" set:html={ldJson}></script>
   <article>
     <ImagePreview />
-    <CodeHighlight />
     <div>
       <header>
         <div class="space-y-1 border-b border-gray-200 pb-5 dark:border-gray-700">

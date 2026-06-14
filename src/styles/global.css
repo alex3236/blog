@@ -84,39 +84,41 @@
   --tw-prose-links: var(--tw-prose-body);
 }
 
-/* Shiki — CSS-variable-based dual theme (catppuccin) */
-.prose .shiki {
+/* Code blocks — native astro-typst hAST rendering */
+.prose pre {
   @apply my-4 overflow-x-auto rounded-lg p-4 text-sm;
-  background-color: var(--shiki-light-bg);
-  color: var(--shiki-light);
+  background-color: #eff1f5;
 }
-.prose .shiki span {
-  color: var(--shiki-light) !important;
+.prose pre span[style*="color"] {
+  /* Map Typst default synth colors to Catppuccin Latte (light) */
+  color: var(--syntax-color) !important;
 }
-html.dark .prose .shiki {
-  --shiki-dark-bg: #000 !important;
-}
-html.dark .prose .shiki,
-html.dark .prose .shiki span {
-  color: var(--shiki-dark) !important;
-  background-color: var(--shiki-dark-bg) !important;
-}
+.prose pre span[style*="color:#d73948"] { --syntax-color: #d20f39; }   /* keywords */
+.prose pre span[style*="color:#4b69c6"] { --syntax-color: #1e66f5; }   /* functions */
+.prose pre span[style*="color:#74747c"] { --syntax-color: #9ca0b0; }   /* comments */
+.prose pre span[style*="color:#198810"] { --syntax-color: #40a02b; }    /* strings */
+.prose pre span[style*="color:#8b41b1"] { --syntax-color: #8839ef; }    /* punctuation */
+.prose pre span[style*="color:#b60157"] { --syntax-color: #fe640b; }   /* constants */
 
-.dark .hljs-comment,
-.dark .hljs-quote { color: #8b949e; }
-.dark .hljs-keyword,
-.dark .hljs-selector-tag,
-.dark .hljs-type { color: #ff7b72; }
-.dark .hljs-string,
-.dark .hljs-addition { color: #a5d6ff; }
-.dark .hljs-number,
-.dark .hljs-literal { color: #79c0ff; }
-.dark .hljs-title,
-.dark .hljs-function { color: #d2a8ff; }
-.dark .hljs-attr,
-.dark .hljs-attribute { color: #ffa657; }
-.dark .hljs-built_in { color: #ff7b72; }
-.dark .hljs-meta { color: #8b949e; }
+html.dark .prose pre {
+  background-color: #1e1e2e;
+}
+.prose pre code {
+  background-color: transparent;
+  color: inherit;
+}
+html.dark .prose pre span[style*="color:#d73948"] { --syntax-color: #f38ba8; }
+html.dark .prose pre span[style*="color:#4b69c6"] { --syntax-color: #89b4fa; }
+html.dark .prose pre span[style*="color:#74747c"] { --syntax-color: #a6adc8; }
+html.dark .prose pre span[style*="color:#198810"] { --syntax-color: #a6e3a1; }
+html.dark .prose pre span[style*="color:#8b41b1"] { --syntax-color: #cba6f7; }
+html.dark .prose pre span[style*="color:#b60157"] { --syntax-color: #f5c2e7; }
+.prose code {
+  @apply rounded px-1 py-0.5 text-sm text-pink-600;
+}
+html.dark .prose code {
+  color: #f472b6;
+}
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;

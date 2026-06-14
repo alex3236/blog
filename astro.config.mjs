@@ -17,7 +17,6 @@ export default defineConfig({
       options: {
         remPx: 16,
       },
-      htmlMode: 'text',
       target: (id) => {
         return 'html'
       },
