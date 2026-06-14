@@ -1,4 +1,4 @@
-import { FaTrainSubway } from 'react-icons/fa6'
+import { FaTrainSubway } from "react-icons/fa6";
 
 export default function Travelling() {
   return (
@@ -11,5 +11,5 @@ export default function Travelling() {
       <FaTrainSubway className="mr-1 h-5 w-5" />
       <span className="relative top-[1px] text-sm">开往</span>
     </a>
-  )
+  );
 }

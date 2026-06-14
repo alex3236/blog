@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export default function IconSeal({ ...props }: SVGProps<SVGSVGElement>) {
   return (
@@ -27,5 +27,5 @@ export default function IconSeal({ ...props }: SVGProps<SVGSVGElement>) {
         <path d=" M 315.52 395.62 C 319.24 394.67 322.97 393.42 326.83 393.21 C 329.38 393.94 333.13 394.84 333.31 398.07 C 333.59 401.61 330.32 404.52 327.01 404.92 C 321.70 405.39 315.43 406.30 311.37 401.98 C 311.34 399.25 312.66 396.33 315.52 395.62 Z" />
       </g>
     </svg>
-  )
+  );
 }

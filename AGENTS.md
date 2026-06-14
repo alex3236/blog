@@ -52,12 +52,12 @@ Plain Astro `<script>` components (like `CodeHighlight.astro`, `ImagePreview.ast
 
 ## Post metadata
 
-| Field | `page: true` | `draft: true` |
-|-------|-------------|---------------|
-| Appears in blog list | No | No |
-| Has own URL at `/blog/slug` | Yes | No |
-| Shows seal at bottom | Yes | N/A |
-| Shows "草稿" badge | No | Yes |
+| Field                       | `page: true` | `draft: true` |
+| --------------------------- | ------------ | ------------- |
+| Appears in blog list        | No           | No            |
+| Has own URL at `/blog/slug` | Yes          | No            |
+| Shows seal at bottom        | Yes          | N/A           |
+| Shows "草稿" badge          | No           | Yes           |
 
 ## Title tag logic
 

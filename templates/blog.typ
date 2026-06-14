@@ -30,7 +30,7 @@
   // Base text
   set text(size: 16pt, lang: "zh", region: "cn")
   
-  set raw(theme: auto)
+  set raw(theme: none)
 
   // Images — image() is overridden to output <img> directly for remote URLs
   // Blockquotes

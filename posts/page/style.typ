@@ -111,7 +111,7 @@ public class DexHookHelper {
 
 一段 Kotlin：
 
-```java
+```kotlin
 data class XposedHook(
     val packageName: String,
     val className: String,

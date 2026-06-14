@@ -1,4 +1,4 @@
-import { FaRss } from 'react-icons/fa6'
+import { FaRss } from "react-icons/fa6";
 
 export default function RSSButton() {
   return (
@@ -9,5 +9,5 @@ export default function RSSButton() {
     >
       <FaRss className="h-5 w-5" />
     </a>
-  )
+  );
 }

@@ -24,13 +24,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'npm'
+          node-version: "22"
+          cache: "npm"
 
       - name: Setup Typst
         uses: typst-community/setup-typst@v4
         with:
-          typst-version: '0.14'
+          typst-version: "0.14"
 
       - name: Install dependencies
         run: npm ci
