@@ -2,7 +2,7 @@
   import mediumZoom from 'medium-zoom'
 
   document.addEventListener('DOMContentLoaded', () => {
-    mediumZoom('.prose img', {
+    mediumZoom('.prose img:not(.typst-frame)', {
       margin: 24,
       background: 'rgba(0, 0, 0, 0.8)',
     })

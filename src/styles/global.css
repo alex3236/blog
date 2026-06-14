@@ -120,6 +120,34 @@ html.dark .prose .shiki {
 html.dark .prose pre:not(.shiki) {
   background-color: #1e1e2e;
 }
+
+/* Inline math — compact, override block img and prose margins */
+.typst-math-inline,
+.typst-math-inline > span {
+  display: inline !important;
+}
+.typst-math-inline .typst-frame {
+  display: inline;
+  vertical-align: middle;
+  margin: 0 !important;
+  transform: translateY(-0.15em);
+}
+
+/* Block math — centered */
+.typst-math-block {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+.typst-math-block .typst-frame {
+  margin: 0 !important;
+}
+
+/* Invert math SVGs in dark mode; hue-rotate preserves original color perception */
+html.dark .typst-math .typst-frame {
+  filter: invert(1) hue-rotate(180deg);
+}
+
 .prose code {
   @apply rounded px-1 py-0.5 text-sm text-pink-600;
 }

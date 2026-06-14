@@ -167,6 +167,124 @@ $ integral_a^b f(x) dif x = F(b) - F(a) $
 
 贝叶斯定理：$ P(A | B) = (P(B | A) P(A)) / P(B) $
 
+=== 更多公式排版
+
+矩阵与行列式：
+
+$ mat(1, 2, 3; 4, 5, 6; 7, 8, 9) $
+
+带省略号的长矩阵：
+
+$ mat(a_1, a_2, dots.c, a_n; b_1, b_2, dots.c, b_n; dots.v, dots.v, dots.down, dots.v; x_1, x_2, dots.c, x_n) $
+
+分段函数：
+
+$ f(x) = cases(0 & "if" thin x < 0, 1 & "if" thin x >= 0) $
+
+多行对齐公式：
+
+$ A &= B + C \
+   &= D + E + F \
+   &= G $
+
+上标下标与求和：
+
+$ sum_(k=1)^n k = (n(n+1)) / 2 $
+
+集合与逻辑符号：
+
+$ forall x in RR, thin exists y in NN : x < y $
+
+希腊字母与箭头：
+
+$ alpha -> beta => gamma |-> delta $
+
+== 形状与渐变
+
+Typst 支持丰富的几何形状和渐变填充。
+
+方格（纯色填充）：
+
+#figure(
+  frame(square(size: 60pt, fill: blue.lighten(40%))),
+  caption: [方格：浅蓝色填充],
+)
+
+方格（线性渐变彩虹）：
+
+#figure(
+  frame(
+    square(
+      size: 80pt,
+      fill: gradient.linear(..color.map.rainbow),
+    ),
+  ),
+  caption: [方格：线性渐变彩虹],
+)
+
+圆角矩形（径向渐变）：
+
+#figure(
+  frame(
+    rect(
+      width: 200pt,
+      height: 50pt,
+      fill: gradient.radial(red, yellow, green),
+      stroke: 2pt + black,
+      radius: 8pt,
+    ),
+  ),
+  caption: [圆角矩形：径向渐变红黄绿，带黑色描边],
+)
+
+圆形（锥形渐变）：
+
+#figure(
+  frame(
+    circle(
+      radius: 40pt,
+      fill: gradient.conic(..color.map.rainbow),
+      stroke: 2pt + gray,
+    ),
+  ),
+  caption: [圆形：锥形渐变彩虹],
+)
+
+不同透明度叠加：
+
+#frame(
+  stack(
+    dir: ltr,
+    spacing: -20pt,
+    rect(width: 50pt, height: 50pt, fill: red.transparentize(40%)),
+    rect(width: 50pt, height: 50pt, fill: green.transparentize(40%)),
+    rect(width: 50pt, height: 50pt, fill: blue.transparentize(40%)),
+  ),
+)
+
+== `#set text()` 规则
+
+Typst 的 `#set text()` 规则允许在文档中局部或全局地更改文本样式。以下是几个常用示例。
+
+内联文本样式——不同字重：
+
+#set text(weight: "regular")
+这一段使用常规字重。
+
+#set text(weight: "bold")
+*这一段使用粗体。*
+
+#set text(weight: "regular")
+
+不同字号：
+
+#set text(size: 12pt)
+这是 12pt 的文本。 #text(size: 20pt)[这是 20pt 的文本。] 回到 12pt。
+
+上标和下标：$x^2 + y^2 = z^2$、H#sub[2]O、E = mc#super[2]。
+
+#set text(size: 16pt, weight: "regular")
+
 == 水平分割线和表格
 
 #line(length: 100%)

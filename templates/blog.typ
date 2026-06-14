@@ -10,6 +10,9 @@
   )
 }
 
+// Wrap content in an html.frame for HTML export (math, shapes, etc.)
+#let frame(body) = box(html.frame(body))
+
 #let main-chinese(
   title: "Untitled",
   desc: none,
@@ -31,6 +34,19 @@
   set text(size: 16pt, lang: "zh", region: "cn")
   
   set raw(theme: none)
+
+  // Math — render equations as inline SVGs. Block math centered, inline math compact.
+  show math.equation: it => {
+    if it.block {
+      html.elem("span", attrs: (
+        class: "typst-math typst-math-block",
+      ), box(html.frame(it)))
+    } else {
+      html.elem("span", attrs: (
+        class: "typst-math typst-math-inline",
+      ), box(html.frame(it)))
+    }
+  }
 
   // Images — image() is overridden to output <img> directly for remote URLs
   // Blockquotes
