@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { getCollection } from 'astro:content'
+import { formatDate } from '../../data/navLinks'
+import { siteMetadata } from '../../data/siteMetadata'
+import IconSeal from '../../components/IconSeal'
+import ImagePreview from '../../components/ImagePreview.astro'
+
+const postModules = import.meta.glob<any>('/posts/**/*.typ')
+
+export async function getStaticPaths() {
+  const pages = await getCollection('posts', p => p.data.page && !p.data.draft)
+  return pages.map(p => ({
+    params: { slug: p.id.replace(/^pages\//, '') },
+  }))
+}
+
+const { slug } = Astro.params
+const pages = await getCollection('posts', p => p.data.page)
+const post = pages.find(p => p.id.replace(/^pages\//, '') === slug)
+
+if (!post) {
+  return Astro.redirect('/404')
+}
+
+// Find the matching Typst module by slug → file path mapping
+const entry = Object.entries(postModules).find(([path]) => path.endsWith(`/${post.id}.typ`))
+const Content = entry ? (await entry[1]()).default : null
+---
+
+<BaseLayout title={post.data.title} description={post.data.summary || post.data.description}>
+  <article>
+    <ImagePreview />
+    <div>
+      <header>
+        <div class="space-y-1 border-b border-gray-200 pb-5 dark:border-gray-700">
+          <div>
+            <h1 class="font-serif text-3xl leading-9 font-bold tracking-tight text-gray-700 md:text-4xl md:leading-16 dark:text-gray-100">
+              {post.data.title}
+            </h1>
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+            <dl class="contents">
+              <div class="flex items-center gap-2 md:pl-1 mt-1 md:mt-4">
+                <dt class="sr-only">Last modified on</dt>
+                <dd class="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
+                  <time datetime={post.data.date}>
+                    {formatDate(post.data.date, siteMetadata.locale)}
+                  </time>
+                  {post.data.weather && <span>, {post.data.weather}</span>}
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </header>
+      <div class="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-4 xl:divide-y-0 dark:divide-gray-700">
+        <div class="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
+          <div class="prose dark:prose-invert max-w-none pt-10 pb-8">
+            {Content ? <Content /> : <p>Loading...</p>}
+            {siteMetadata.showSeal && (
+              <div class="flex justify-end">
+                <IconSeal client:load className="h-14 w-14" />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

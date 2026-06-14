@@ -4,7 +4,7 @@
   title: "星辰烘焙手记",
   category: "手记",
   page: true,
-  summary: "在那些星辰闪耀的日子里",
+  date: "在那些星辰闪耀的日子里",
   weather: "遥望星空",
 )
 

@@ -10,7 +10,7 @@ import ImagePreview from '../../components/ImagePreview.astro'
 const postModules = import.meta.glob<any>('/posts/**/*.typ')
 
 export async function getStaticPaths() {
-  const posts = await getCollection('posts', p => !p.data.draft)
+  const posts = await getCollection('posts', p => !p.data.draft && !p.data.page)
   return posts.map(p => ({
     params: { slug: p.id },
   }))
@@ -66,7 +66,7 @@ const ldJson = JSON.stringify({
               </div>
             </dl>
             <div>
-              {post.data.draft && !post.data.page && (
+              {post.data.draft && (
                 <span class="mr-3 rounded-full border-2 border-red-500 px-2 text-sm font-medium text-red-600 dark:text-red-400">
                   草稿
                 </span>
@@ -98,7 +98,7 @@ const ldJson = JSON.stringify({
               {prev?.id && prev?.title && (
                 <div class="flex justify-start pt-2">
                   <a
-                    href={`/blog/${prev.id}`}
+                    href={`/posts/${prev.id}`}
                     class="text-primary-600 hover:text-primary-600 dark:hover:text-primary-400"
                     aria-label={`Previous post: ${prev.title}`}
                   >
@@ -109,7 +109,7 @@ const ldJson = JSON.stringify({
               {next?.id && next?.title && (
                 <div class="flex justify-end pt-2">
                   <a
-                    href={`/blog/${next.id}`}
+                    href={`/posts/${next.id}`}
                     class="text-primary-600 hover:text-primary-600 dark:hover:text-primary-400"
                     aria-label={`Next post: ${next.title}`}
                   >
