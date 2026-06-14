@@ -132,9 +132,7 @@ export async function getAllYears(): Promise<number[]> {
   return Array.from(years).sort((a, b) => b - a);
 }
 
-export async function getAdjacentPosts(
-  id: string,
-): Promise<{
+export async function getAdjacentPosts(id: string): Promise<{
   prev?: { id: string; title: string };
   next?: { id: string; title: string };
 }> {

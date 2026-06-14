@@ -3,7 +3,8 @@ import { codeToHast } from "shiki";
 
 function extractText(node: RootContent): string {
   if (node.type === "text") return (node as Text).value;
-  if (node.type === "element" && (node as Element).tagName === "br") return "\n";
+  if (node.type === "element" && (node as Element).tagName === "br")
+    return "\n";
   if ("children" in node && Array.isArray(node.children)) {
     return node.children.map(extractText).join("");
   }
